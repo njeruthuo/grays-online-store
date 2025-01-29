@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+.base-color {
+  @apply bg-[#CEEAF7];
+}
+
+.card-color {
+  @apply bg-white;
+}
+
+.category-header {
+  @apply bg-[#413F3D] text-white p-3 font-bold;
+}
+
+.category-container {
+  @apply flex flex-col space-y-14 p-3;
+}
