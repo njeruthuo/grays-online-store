@@ -1,4 +1,6 @@
+import AddToCart from "./AddToCart";
 import ProductCard from "./ProductCard";
-import ProductDetail from "./ProductDetail";
+import ImageCarousel from "./ImageSlider";
+import RelatedProducts from "./RelatedProducts";
 
-export { ProductCard, ProductDetail };
+export { ProductCard, ImageCarousel, RelatedProducts, AddToCart };

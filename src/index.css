@@ -15,3 +15,7 @@
 .category-container {
   @apply flex flex-col space-y-14 p-3;
 }
+
+.product-header {
+  @apply text-3xl my-2;
+}
