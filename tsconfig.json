@@ -6,6 +6,7 @@
   ],
 
   "compilerOptions": {
+    // "tsx": "react-tsx",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
