@@ -5,7 +5,9 @@ import { useFetchProductsQuery } from "@/state/features/products/productApi";
 
 const ProductList = () => {
   const { isError } = useFetchProductsQuery(null);
-  console.log(isError);
+  if (isError) {
+    console.log(isError);
+  }
 
   const Products = useSelector(productList);
   return (
@@ -13,13 +15,13 @@ const ProductList = () => {
       <div className="card-color p-3">
         <p>More filters here</p>
       </div>
-      <div className="p-3">
+      <div className="p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
         {Products?.map((product, index) => (
           <ProductCard key={index} {...product} />
         ))}
-        {/* <p>Products here</p> */}
       </div>
     </section>
   );
 };
+
 export default ProductList;

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
 
 .base-color {
   @apply bg-[#CEEAF7];
@@ -18,4 +19,11 @@
 
 .product-header {
   @apply text-3xl my-2;
+}
+
+.kumar-one-regular {
+  font-family: "Dancing Script", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
 }

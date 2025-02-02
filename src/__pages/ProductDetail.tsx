@@ -1,17 +1,25 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { productList } from "@/state/features/products/productSlice";
+import { AddToCart, AlreadyCarted } from "@/components/cart";
 import {
-  AddToCart,
-  ImageCarousel,
-  RelatedProducts,
-} from "@/components/products";
+  cartItemsList,
+  productList,
+} from "@/state/features/products/productSlice";
+import { ImageCarousel, RelatedProducts } from "@/components/products";
 
 const ProductDetail = () => {
+  const cartItems = useSelector(cartItemsList);
   const { id } = useParams();
 
   const productId = id ? parseInt(id, 10) : null;
+
+  const isProductInCart = cartItems.some(
+    (item) => item.product.id == productId
+  );
+
+  const itemCount =
+    cartItems.find((item) => item.product.id === productId)?.quantity || 0;
 
   const selectedProduct = useSelector(productList).find(
     (product) => product?.id === productId
@@ -19,7 +27,9 @@ const ProductDetail = () => {
 
   return (
     <section className="mx-auto w-[90%] py-2 pt-2 ">
-      <h2 className="product-header text-center text-gray-800">Product description</h2>
+      <h2 className="product-header text-center text-gray-800">
+        Product description
+      </h2>
       <div className="flex space-x-10 justify-center mt-4">
         <div className="card-color  rounded-xl flex border justify-end w-1/3">
           {selectedProduct?.images && (
@@ -45,7 +55,16 @@ const ProductDetail = () => {
           </div>
 
           <div className="mt-5">
-            <AddToCart />
+            {selectedProduct ? (
+              isProductInCart ? (
+                <AlreadyCarted
+                  product={selectedProduct}
+                  quantity={itemCount ?? 1}
+                />
+              ) : (
+                <AddToCart product={selectedProduct} />
+              )
+            ) : null}
           </div>
         </div>
       </div>

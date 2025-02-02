@@ -13,6 +13,12 @@ export interface IProduct {
   stocked: boolean;
 }
 
+interface CartItem {
+  quantity: number;
+  product: IProduct;
+}
+
 export interface ProductState {
   products: IProduct[];
+  cart: CartItem[];
 }

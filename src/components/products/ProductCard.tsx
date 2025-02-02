@@ -3,20 +3,22 @@ import { Link } from "react-router-dom";
 
 import { IProduct } from "@/types/products";
 import ImageCarousel from "./ImageSlider";
-import AddToCart from "./AddToCart";
+import AddToCart from "../cart/AddToCart";
+import { useSelector } from "react-redux";
+import { cartItemsList } from "@/state/features/products/productSlice";
+import { AlreadyCarted } from "../cart";
 
-const ProductCard: React.FC<IProduct> = ({
-  id,
-  // brand,
-  // category,
-  description,
-  images,
-  name,
-  price,
-  stocked,
-}) => {
+const ProductCard: React.FC<IProduct> = (product) => {
+  const cartItems = useSelector(cartItemsList);
+  const { id, description, images, name, price, stocked } = product;
+
+  const isProductInCart = cartItems.some((item) => item.product.id === id);
+
+  const itemCount =
+    cartItems.find((item) => item.product.id === id)?.quantity || 0;
+
   return (
-    <section className="w-1/3 shadow-2xl rounded p-2 text-center bg-[#F6F5AE]">
+    <section className="shadow-2xl rounded p-2 text-center bg-[#F6F5AE]">
       <Link to={`/details/${id}`}>
         <div>
           <div>
@@ -43,8 +45,11 @@ const ProductCard: React.FC<IProduct> = ({
           </div>
         </div>
       </Link>
-
-      <AddToCart />
+      {isProductInCart ? (
+        <AlreadyCarted product={product} quantity={itemCount} />
+      ) : (
+        <AddToCart product={product} />
+      )}
     </section>
   );
 };
