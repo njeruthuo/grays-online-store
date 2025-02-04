@@ -4,7 +4,7 @@ import { Header } from "@/components/navigation";
 
 const MainLayout = () => {
   return (
-    <section className=" min-h-screen base-color">
+    <section className=" ">
       <Header />
       <Outlet />
     </section>

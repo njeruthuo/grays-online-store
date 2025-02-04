@@ -16,7 +16,7 @@ const AlreadyCarted = ({
 }) => {
   const dispatch = useDispatch();
   return (
-    <div className="rounded flex justify-center gap-2 bg-orange-600 text-white text py-2 text-center hover:cursor-pointer">
+    <div className="rounded flex justify-center gap-2 bg-orange-600 text-white text py-2 text-center hover:cursor-pointer w-full">
       <div className="flex space-x-6 place-items-center">
         <img
           onClick={() => dispatch(reduceCartQuantity(product))}

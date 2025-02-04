@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { IProduct } from "@/types/products";
+import { AlreadyCarted } from "../cart";
 import ImageCarousel from "./ImageSlider";
 import AddToCart from "../cart/AddToCart";
-import { useSelector } from "react-redux";
+import { IProduct } from "@/types/products";
+import { formatNumber } from "@/utils/numberFormatter";
 import { cartItemsList } from "@/state/features/products/productSlice";
-import { AlreadyCarted } from "../cart";
 
 const ProductCard: React.FC<IProduct> = (product) => {
   const cartItems = useSelector(cartItemsList);
@@ -26,7 +27,9 @@ const ProductCard: React.FC<IProduct> = (product) => {
           </div>
           <p className="font-bold  mt-2 text-xl text-gray-800">{name}</p>
           <p className="text-sm">{description}</p>
-          <p className="text-lg my-2 font-bold text-blue-600">Kshs. {price}</p>
+          <p className="text-lg my-2 font-bold text-blue-600">
+            Kshs. {formatNumber(price)}
+          </p>
           <div className="flex items-center mb-4 justify-center">
             <input
               id="stock-checkbox"

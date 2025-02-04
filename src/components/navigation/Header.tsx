@@ -1,5 +1,7 @@
-import { RootState } from "@/state/store/store";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+import { RootState } from "@/state/store/store";
 
 const Header = () => {
   const cart = useSelector((state: RootState) => state.productReducer.cart);
@@ -10,15 +12,17 @@ const Header = () => {
           Grays online store
         </div>
 
-        <div className="bg-white hover:cursor-pointer rounded-full p-2 relative w-12 h-12 flex items-center justify-center shadow-md">
-          <img src="/shopping_cart_26dp.svg" alt="Cart" className="w-6 h-6" />
+        <Link to={"/checkout"}>
+          <div className="bg-white hover:cursor-pointer rounded-full p-2 relative w-12 h-12 flex items-center justify-center shadow-md">
+            <img src="/shopping_cart_26dp.svg" alt="Cart" className="w-6 h-6" />
 
-          {cart.length > 0 && (
-            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-              {cart.length}
-            </div>
-          )}
-        </div>
+            {cart.length > 0 && (
+              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {cart.length}
+              </div>
+            )}
+          </div>
+        </Link>
       </div>
     </section>
   );
