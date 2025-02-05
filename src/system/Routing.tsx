@@ -8,10 +8,11 @@ const Routing = () => {
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route index element={<Catalogue />} />
+          <Route path="/" element={<Catalogue />} />
           <Route path="/details/:id" element={<ProductDetail />} />
           <Route path="/checkout" element={<Checkout />} />
         </Route>
+        <Route path="*" element={<Checkout />} />
       </Routes>
     </BrowserRouter>
   );
