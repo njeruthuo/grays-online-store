@@ -1,5 +1,6 @@
 import { MainLayout } from "@/__layouts";
 import { Catalogue, ProductDetail } from "@/__pages";
+import NotFound404 from "@/__pages/NotFound404";
 import { Checkout } from "@/components/checkout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -12,7 +13,7 @@ const Routing = () => {
           <Route path="/details/:id" element={<ProductDetail />} />
           <Route path="/checkout" element={<Checkout />} />
         </Route>
-        <Route path="*" element={<Checkout />} />
+        <Route path="*" element={<NotFound404 />} />
       </Routes>
     </BrowserRouter>
   );

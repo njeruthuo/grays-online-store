@@ -5,10 +5,13 @@ const GlobalModal: React.FC<ModalProps> = ({
   close,
   title,
   children,
+  className
 }) => {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-black/30 z-50">
+    <div
+      className={`${className} fixed inset-0 flex items-center justify-center backdrop-blur-md bg-black/30 z-50`}
+    >
       <div className="bg-white rounded-lg shadow-lg max-w-lg w-full">
         {/* Header */}
         <div className="flex justify-between items-center px-6 py-4 border-b">

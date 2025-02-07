@@ -105,25 +105,26 @@ const Checkout = () => {
         )}
         <div></div>
       </section>
-
-      <section
-        id="payments&totals"
-        className="w-[90%] mx-auto flex place-items-center"
-      >
-        <p className="font-bold my-6">
-          <span>Cumulative totals: Kshs. </span>
-          <span className="text-blue-500 text-xl underline mx-4">
-            {formatNumber(totals)}
-          </span>
-        </p>
-
-        <button
-          onClick={togglePayment}
-          className="ml-auto flex hover:cursor-pointer text-white font-bold px-2 py-1 rounded-md bg-green-500"
+      {cart.length > 0 && (
+        <section
+          id="payments&totals"
+          className="w-[90%] mx-auto flex place-items-center"
         >
-          <span>Check out</span> <ChevronRight />
-        </button>
-      </section>
+          <p className="font-bold my-6">
+            <span>Cumulative totals: Kshs. </span>
+            <span className="text-blue-500 text-xl underline mx-4">
+              {formatNumber(totals)}
+            </span>
+          </p>
+
+          <button
+            onClick={togglePayment}
+            className="ml-auto flex hover:cursor-pointer text-white font-bold px-2 py-1 rounded-md bg-green-500"
+          >
+            <span>Check out</span> <ChevronRight />
+          </button>
+        </section>
+      )}
 
       {openPayment && <Payments close={togglePayment} open={openPayment} />}
     </section>

@@ -14,4 +14,5 @@ export interface ModalProps {
   close: () => void;
   title?: string;
   children: ReactNode;
+  className: string;
 }

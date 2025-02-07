@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { AlreadyCarted } from "../cart";
-import ImageCarousel from "./ImageSlider";
 import AddToCart from "../cart/AddToCart";
 import { IProduct } from "@/types/products";
+import { BASE_IMAGE_URL } from "@/constants/constant";
 import { formatNumber } from "@/utils/numberFormatter";
 import { cartItemsList } from "@/state/features/products/productSlice";
 
@@ -19,18 +19,22 @@ const ProductCard: React.FC<IProduct> = (product) => {
     cartItems.find((item) => item.product.id === id)?.quantity || 0;
 
   return (
-    <section className="shadow-2xl rounded p-2 text-center bg-[#F6F5AE]">
+    <section className="shadow-2xl rounded p-2 text-center product-card-bg">
       <Link to={`/details/${id}`}>
         <div>
           <div>
-            <ImageCarousel images={images} />
+            <img
+              src={`${BASE_IMAGE_URL}${images[0]}`}
+              alt=""
+              className="w-full"
+            />
           </div>
           <p className="font-bold  mt-2 text-xl text-gray-800">{name}</p>
           <p className="text-sm">{description}</p>
-          <p className="text-lg my-2 font-bold text-blue-600">
+          <p className="text-lg my-1 font-bold text-blue-600">
             Kshs. {formatNumber(price)}
           </p>
-          <div className="flex items-center mb-4 justify-center">
+          <div className="flex items-center mb-2 justify-center">
             <input
               id="stock-checkbox"
               type="checkbox"

@@ -9,7 +9,7 @@ const Header = () => {
     <section className="w-full p-4 px-22 bg-green-600 text-white font-bold text-xl">
       <div className="flex justify-between place-items-center">
         <div className="kumar-one-regular font-bold text-2xl">
-          Grays online store
+          <Link to={"/"}>Grays online store</Link>
         </div>
 
         <Link to={"/checkout"}>

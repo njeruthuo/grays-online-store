@@ -1,7 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
-@import "tailwindcss";
 
 @import "tailwindcss";
+
+:root {
+  --dark-purple: #242038;
+  --slate-blue: #725ac1;
+  --tropical-indigo: #8d86c9;
+  --french-gray: #cac4ce;
+  --linen: #f7ece1;
+  --yale-blue: #043565;
+  --midnight-green: #02394a;
+}
+
+.product-card-bg {
+  @apply bg-[var(--linen)];
+}
 
 .base-color {
   @apply bg-[#CEEAF7];
@@ -28,4 +41,12 @@
   font-optical-sizing: auto;
   font-weight: 700;
   font-style: normal;
+}
+
+.dark-purple {
+  @apply bg-[var(--dark-purple)];
+}
+
+.dark-purple-text {
+  @apply text-[var(--dark-purple)];
 }

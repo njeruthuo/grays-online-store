@@ -1,14 +1,16 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
+
 import { IPaymentType } from ".";
 import { GlobalModal } from "../modal";
-import { cartItemsList } from "@/state/features/products/productSlice";
-import { formatNumber } from "@/utils/numberFormatter";
 import { Button, Input } from "../inputs";
-import { useState } from "react";
+import { formatNumber } from "@/utils/numberFormatter";
+import { BASE_WEBSOCKET_URL } from "@/constants/constant";
+import { cartItemsList } from "@/state/features/products/productSlice";
 
 const Payments: React.FC<IPaymentType> = ({ open, close }) => {
   const [phone, setPhone] = useState("");
-  let socket = new WebSocket("ws://127.0.0.1:8001/ws/mpesa/");
+  let socket = new WebSocket(BASE_WEBSOCKET_URL);
 
   socket.onopen = () => {
     console.log("WebSocket Connected!");
@@ -39,7 +41,7 @@ const Payments: React.FC<IPaymentType> = ({ open, close }) => {
 
   function reconnectWebSocket() {
     if (socket.readyState === WebSocket.CLOSED) {
-      socket = new WebSocket("ws://127.0.0.1:8001/ws/mpesa/");
+      socket = new WebSocket(BASE_WEBSOCKET_URL);
     }
   }
 
@@ -56,7 +58,12 @@ const Payments: React.FC<IPaymentType> = ({ open, close }) => {
 
   if (!open) return null;
   return (
-    <GlobalModal close={close} open={open} title="Payments">
+    <GlobalModal
+      close={close}
+      open={open}
+      title="Payments"
+      className="dark-purple-text"
+    >
       <section>
         <h1 className="font-bold text-lg">Pay for the following items</h1>
 
