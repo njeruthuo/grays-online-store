@@ -8,7 +8,7 @@ const Button: React.FC<ButtonType> = ({
 }) => {
   return (
     <button
-      className={`${className} `}
+      className={`${className} hover:cursor-pointer`}
       onClick={onClick}
       type={submitBtn ? "submit" : "button"}
     >

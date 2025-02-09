@@ -21,4 +21,10 @@ interface CartItem {
 export interface ProductState {
   products: IProduct[];
   cart: CartItem[];
+  filteredProducts: [];
+}
+
+export interface ICategories {
+  id: number;
+  name: string;
 }

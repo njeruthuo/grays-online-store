@@ -7,6 +7,7 @@ import { RootState } from "@/state/store/store";
 const initialState: ProductState = {
   products: [],
   cart: [],
+  filteredProducts: [],
 };
 
 const productSlice = createSlice({
@@ -66,5 +67,7 @@ export default productSlice.reducer;
 export const { addToCart, removeFromCart, reduceCartQuantity } =
   productSlice.actions;
 
-export const productList = (state: RootState) => state.productReducer.products;
 export const cartItemsList = (state: RootState) => state.productReducer.cart;
+export const productList = (state: RootState) => state.productReducer.products;
+export const productItemsList = (state: RootState) =>
+  state.productReducer.filteredProducts;
