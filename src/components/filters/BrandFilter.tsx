@@ -10,7 +10,7 @@ const BrandFilter = ({ products }: { products: IProduct[] }) => {
   const [selectedBrand, setSelectedBrand] = useState<ICategories[]>([]);
 
   useEffect(() => {
-    setBrandList((prev) => {
+    setBrandList(() => {
       const listItems: ICategories[] = [];
       products.forEach((product) => listItems.push(product.brand));
       return listItems;
