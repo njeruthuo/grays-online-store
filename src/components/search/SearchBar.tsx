@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { Button, Input } from "../inputs";
+import { useDispatch } from "react-redux";
+import { filterSearchBar } from "@/state/features/products/productSlice";
 
 const SearchBar = () => {
+  const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(() => e.target.value);
   };
 
   const handleSubmit = () => {
-    return searchText;
+    dispatch(filterSearchBar(searchText));
   };
 
   return (

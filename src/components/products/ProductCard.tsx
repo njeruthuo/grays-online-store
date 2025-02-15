@@ -26,7 +26,7 @@ const ProductCard: React.FC<IProduct> = (product) => {
             <img
               src={`${BASE_IMAGE_URL}${images[0]}`}
               alt=""
-              className="w-full"
+              className="w-full h-44"
             />
           </div>
           <p className="font-bold  mt-2 text-xl text-gray-800">{name}</p>

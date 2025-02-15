@@ -4,13 +4,17 @@ export interface IProduct {
   price: string;
   description: string;
   brand: {
+    id: number;
     name: string;
   };
-  category: {
-    name: string;
-  };
+  category: ICategories;
   images: string[];
   stocked: boolean;
+}
+
+export interface ICategories {
+  id: number;
+  name: string;
 }
 
 interface CartItem {
@@ -21,7 +25,7 @@ interface CartItem {
 export interface ProductState {
   products: IProduct[];
   cart: CartItem[];
-  filteredProducts: [];
+  filteredProducts: IProduct[];
 }
 
 export interface ICategories {
