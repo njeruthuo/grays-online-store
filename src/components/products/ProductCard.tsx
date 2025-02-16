@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { AlreadyCarted } from "../cart";
 import AddToCart from "../cart/AddToCart";
 import { IProduct } from "@/types/products";
-import { BASE_IMAGE_URL } from "@/constants/constant";
+// import { BASE_IMAGE_URL } from "@/constants/constant";
 import { formatNumber } from "@/utils/numberFormatter";
 import { cartItemsList } from "@/state/features/products/productSlice";
 
@@ -24,7 +24,7 @@ const ProductCard: React.FC<IProduct> = (product) => {
         <div>
           <div>
             <img
-              src={`${BASE_IMAGE_URL}${images[0]}`}
+              src={`${images[0]}`}
               alt=""
               className="w-full h-44"
             />
