@@ -5,7 +5,6 @@ import { ChevronRight, TrashIcon } from "lucide-react";
 
 import Payments from "./Payments";
 import { AlreadyCarted } from "../cart";
-import { BASE_IMAGE_URL } from "@/constants/constant";
 import { formatNumber } from "@/utils/numberFormatter";
 import {
   cartItemsList,
@@ -54,7 +53,8 @@ const Checkout = () => {
                   <div className="flex-1">
                     <img
                       alt={item.product.name}
-                      src={`${BASE_IMAGE_URL}${item.product.images[0]}`}
+                      className="h-auto w-44"
+                      src={`${item.product.images[0]}`}
                     />
                   </div>
 
@@ -119,7 +119,7 @@ const Checkout = () => {
 
           <button
             onClick={togglePayment}
-            className="ml-auto flex hover:cursor-pointer text-white font-bold px-2 py-1 rounded-md bg-green-500"
+            className="ml-auto flex hover:cursor-pointer text-white font-bold px-4 py-3 rounded-md bg-green-500"
           >
             <span>Check out</span> <ChevronRight />
           </button>
