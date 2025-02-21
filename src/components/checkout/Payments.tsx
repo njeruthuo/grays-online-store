@@ -7,9 +7,29 @@ import { Button, Input } from "../inputs";
 import { formatNumber } from "@/utils/numberFormatter";
 import { BASE_WEBSOCKET_URL } from "@/constants/constant";
 import { cartItemsList } from "@/state/features/products/productSlice";
+import { useCheckoutMutation } from "@/state/features/checkout/checkoutApi";
 
 const Payments: React.FC<IPaymentType> = ({ open, close }) => {
+  const cartItems = useSelector(cartItemsList);
+
+  const totals = cartItems.reduce(
+    (total, item) => total + Number(item.product.price) * item.quantity,
+    0
+  );
+
+  const [checkout, { isLoading }] = useCheckoutMutation();
+  
   const [phone, setPhone] = useState("");
+
+  const checkoutHandler = async () => {
+    try {
+      const response = await checkout({ phone, totals, cartItems }).unwrap();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   let socket = new WebSocket(BASE_WEBSOCKET_URL);
 
   socket.onopen = () => {
@@ -22,15 +42,15 @@ const Payments: React.FC<IPaymentType> = ({ open, close }) => {
     alert(`Payment Status: ${data.ResponseDescription}`);
   };
 
-  function requestSTKPush(phone: string, amount: number, orderId: string) {
-    socket.send(
-      JSON.stringify({
-        phone_number: phone,
-        amount: amount,
-        order_id: orderId,
-      })
-    );
-  }
+  // function requestSTKPush(phone: string, amount: number, orderId: string) {
+  //   socket.send(
+  //     JSON.stringify({
+  //       phone_number: phone,
+  //       amount: amount,
+  //       order_id: orderId,
+  //     })
+  //   );
+  // }
 
   socket.onclose = function () {
     console.log("WebSocket closed, reconnecting...");
@@ -45,16 +65,9 @@ const Payments: React.FC<IPaymentType> = ({ open, close }) => {
     }
   }
 
-  const cartItems = useSelector(cartItemsList);
-
-  const totals = cartItems.reduce(
-    (total, item) => total + Number(item.product.price) * item.quantity,
-    0
-  );
-
-  function handleSTKPushRequest() {
-    requestSTKPush(phone, totals, phone);
-  }
+  // function handleSTKPushRequest() {
+  //   requestSTKPush(phone, totals);
+  // }
 
   if (!open) return null;
   return (
@@ -107,7 +120,7 @@ const Payments: React.FC<IPaymentType> = ({ open, close }) => {
 
           <Button
             submitBtn={true}
-            onClick={handleSTKPushRequest}
+            onClick={checkoutHandler}
             className="ring ring-blue-500 text-white px-2 rounded bg-blue-500"
             children=<span>Request payment</span>
           />
