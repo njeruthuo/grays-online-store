@@ -41,6 +41,14 @@
   --radius: 0.6rem;
 }
 
+.base-w {
+  @apply mx-auto w-[90%];
+}
+
+.order-span {
+  @apply text-sm font-bold mx-4;
+}
+
 .product-card-bg {
   @apply bg-[var(--linen)];
 }
