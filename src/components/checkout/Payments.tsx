@@ -2,9 +2,9 @@ import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 
 import { IPaymentType } from ".";
-import { Spinner } from "../spinner";
+// import { Spinner } from "../spinner";
 import { GlobalModal } from "../modal";
-import { Button, Input } from "../inputs";
+import { Button } from "../inputs";
 import { formatNumber } from "@/utils/numberFormatter";
 import { BASE_WEBSOCKET_URL } from "@/constants/constant";
 import { cartItemsList } from "@/state/features/products/productSlice";
@@ -16,17 +16,19 @@ const Payments: React.FC<IPaymentType> = ({
   setTransactionSuccessful,
 }) => {
   const [checkout, { isLoading }] = useCheckoutMutation();
-  const [transactionComplete, setTransactionComplete] = useState(false);
   const [mpesaResponse, setMpesaResponse] = useState({ data: [] });
+  const [transactionComplete, setTransactionComplete] = useState<boolean>();
 
   const transactionSuccessful: boolean = mpesaResponse?.data?.some(
     (item: { Name: string }) => item.Name === "MpesaReceiptNumber"
   );
 
   useEffect(() => {
-    setTransactionSuccessful(transactionSuccessful);
-    close();
-  });
+    if (transactionSuccessful) {
+      setTransactionSuccessful(transactionSuccessful);
+      // close();
+    }
+  }, [transactionSuccessful, setTransactionSuccessful, close]);
 
   const loading = useMemo(
     () => isLoading || !transactionComplete,
@@ -60,6 +62,7 @@ const Payments: React.FC<IPaymentType> = ({
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
+      console.log('Mpesa notification')
       setTransactionComplete(true);
       setMpesaResponse(data);
     };
@@ -117,9 +120,9 @@ const Payments: React.FC<IPaymentType> = ({
         </div>
 
         <div id="pay" className="flex justify-between mt-3">
-          <Input
+          <input
             placeholder="Phone number"
-            className="placeholder-blue-500"
+            className="placeholder-blue-500 p-2 ring-1 rounded"
             type="text"
             id="phone"
             name="phone"
@@ -137,7 +140,7 @@ const Payments: React.FC<IPaymentType> = ({
                 loading ? "" : ""
               }`}
             >
-              {loading && <Spinner />}
+              {/* {loading && <Spinner />} */}
               <span>Request payment</span>
             </div>
           </Button>
