@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { ModuleRegistry } from "ag-grid-community";
+import { ColDef, ModuleRegistry } from "ag-grid-community";
 import { ClientSideRowModelModule } from "ag-grid-community";
 
 // Register required AG Grid modules
@@ -11,16 +10,17 @@ interface RowTypes {
   name: string;
   price: string | number;
   quantity: number | string;
+  available: boolean;
 }
 
-const ReusableTable = ({ rows }: { rows: RowTypes }) => {
-  const [colDefs, setColDefs] = useState([
+const ReusableTable = ({ rows }: { rows: RowTypes[] }) => {
+  const colDefs: ColDef<RowTypes>[] = [
     { field: "id", headerName: "ID", flex: 1 },
-    { field: "name", flex: 1 },
-    { field: "price", flex: 1 },
-    { field: "quantity", flex: 1 },
-    { field: "available", headerName: "Available", flex: 1 },
-  ]);
+    { field: "name", headerName: "Product Name", flex: 2 },
+    { field: "price", headerName: "Price", flex: 1 },
+    { field: "quantity", headerName: "Quantity", flex: 1 },
+    { field: "available", headerName: "Stocked", flex: 1 },
+  ];
 
   return (
     <div style={{ height: 300, width: "100%" }} className="ag-theme-alpine">

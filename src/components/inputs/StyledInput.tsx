@@ -5,7 +5,7 @@ import Input from "./input";
 
 interface StyledInputProps extends React.ComponentProps<typeof Input> {
   children?: ReactNode;
-  className?: string;
+  className: string;
   type: string;
 }
 
@@ -23,7 +23,6 @@ const StyledInput = React.forwardRef<HTMLInputElement, StyledInputProps>(
           type={type === "password" && showPassword ? "text" : type}
           className={`rounded-lg border hover:border-2 focus:border-none hover:border-gray-700 border-gray-300 p-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${className}`}
           {...props}
-          style={{ outline: "None" }}
         />
         {type === "password" && (
           <button
