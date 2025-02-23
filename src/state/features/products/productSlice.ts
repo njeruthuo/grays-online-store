@@ -33,6 +33,10 @@ const productSlice = createSlice({
       }
     },
 
+    clearCartItems: (state) => {
+      state.cart = [];
+    },
+
     removeFromCart: (state, action) => {
       const { id } = action.payload;
       state.cart = state.cart.filter((item) => item.product.id !== id);
@@ -114,6 +118,7 @@ export const {
   filterPriceRange,
   filterBrand,
   filterSearchBar,
+  clearCartItems,
 } = productSlice.actions;
 
 export const cartItemsList = (state: RootState) => state.productReducer.cart;

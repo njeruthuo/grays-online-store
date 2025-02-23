@@ -1,7 +1,8 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useEffect, useMemo, useState } from "react";
 
 import { IPaymentType } from ".";
+import { Spinner } from "../spinner";
 import { GlobalModal } from "../modal";
 import { Button, Input } from "../inputs";
 import { formatNumber } from "@/utils/numberFormatter";
@@ -9,7 +10,29 @@ import { BASE_WEBSOCKET_URL } from "@/constants/constant";
 import { cartItemsList } from "@/state/features/products/productSlice";
 import { useCheckoutMutation } from "@/state/features/checkout/checkoutApi";
 
-const Payments: React.FC<IPaymentType> = ({ open, close }) => {
+const Payments: React.FC<IPaymentType> = ({
+  open,
+  close,
+  setTransactionSuccessful,
+}) => {
+  const [checkout, { isLoading }] = useCheckoutMutation();
+  const [transactionComplete, setTransactionComplete] = useState(false);
+  const [mpesaResponse, setMpesaResponse] = useState({ data: [] });
+
+  const transactionSuccessful: boolean = mpesaResponse?.data?.some(
+    (item: { Name: string }) => item.Name === "MpesaReceiptNumber"
+  );
+
+  useEffect(() => {
+    setTransactionSuccessful(transactionSuccessful);
+    close();
+  });
+
+  const loading = useMemo(
+    () => isLoading || !transactionComplete,
+    [transactionComplete, isLoading]
+  );
+
   const cartItems = useSelector(cartItemsList);
 
   const totals = cartItems.reduce(
@@ -17,8 +40,6 @@ const Payments: React.FC<IPaymentType> = ({ open, close }) => {
     0
   );
 
-  const [checkout, { isLoading }] = useCheckoutMutation();
-  
   const [phone, setPhone] = useState("");
 
   const checkoutHandler = async () => {
@@ -30,46 +51,33 @@ const Payments: React.FC<IPaymentType> = ({ open, close }) => {
     }
   };
 
-  let socket = new WebSocket(BASE_WEBSOCKET_URL);
+  useEffect(() => {
+    let socket = new WebSocket(BASE_WEBSOCKET_URL);
 
-  socket.onopen = () => {
-    console.log("WebSocket Connected!");
-  };
+    socket.onopen = () => {
+      console.log("WebSocket Connected!");
+    };
 
-  socket.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    console.log("MPESA Response:", data);
-    alert(`Payment Status: ${data.ResponseDescription}`);
-  };
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      setTransactionComplete(true);
+      setMpesaResponse(data);
+    };
 
-  // function requestSTKPush(phone: string, amount: number, orderId: string) {
-  //   socket.send(
-  //     JSON.stringify({
-  //       phone_number: phone,
-  //       amount: amount,
-  //       order_id: orderId,
-  //     })
-  //   );
-  // }
+    socket.onclose = () => {
+      console.log("WebSocket closed, reconnecting...");
+      setTimeout(() => {
+        socket = new WebSocket(BASE_WEBSOCKET_URL);
+      }, 3000);
+    };
 
-  socket.onclose = function () {
-    console.log("WebSocket closed, reconnecting...");
-    setTimeout(() => {
-      reconnectWebSocket();
-    }, 3000);
-  };
-
-  function reconnectWebSocket() {
-    if (socket.readyState === WebSocket.CLOSED) {
-      socket = new WebSocket(BASE_WEBSOCKET_URL);
-    }
-  }
-
-  // function handleSTKPushRequest() {
-  //   requestSTKPush(phone, totals);
-  // }
+    return () => {
+      socket.close(); // Close WebSocket on unmount
+    };
+  }, []);
 
   if (!open) return null;
+
   return (
     <GlobalModal
       close={close}
@@ -115,15 +123,24 @@ const Payments: React.FC<IPaymentType> = ({ open, close }) => {
             type="text"
             id="phone"
             name="phone"
+            value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
 
           <Button
             submitBtn={true}
             onClick={checkoutHandler}
-            className="ring ring-blue-500 text-white px-2 rounded bg-blue-500"
-            children=<span>Request payment</span>
-          />
+            className={`ring ring-blue-500 text-white rounded bg-blue-500`}
+          >
+            <div
+              className={`flex justify-center items-center space-x-2 w-full px-2 ${
+                loading ? "" : ""
+              }`}
+            >
+              {loading && <Spinner />}
+              <span>Request payment</span>
+            </div>
+          </Button>
         </div>
       </section>
     </GlobalModal>

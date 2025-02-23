@@ -1,11 +1,14 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ChevronRight, TrashIcon } from "lucide-react";
 
 import Payments from "./Payments";
 import { AlreadyCarted } from "../cart";
 import { formatNumber } from "@/utils/numberFormatter";
+
+import PaymentFailed from "./PaymentFailed";
+import PaymentSuccessful from "./PaymentSuccessful";
 import {
   cartItemsList,
   removeFromCart,
@@ -14,12 +17,29 @@ import {
 const Checkout = () => {
   const dispatch = useDispatch();
 
+  const [transactionSuccessful, setTransactionSuccessful] = useState<boolean>();
+
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openFailed, setOpenFailed] = useState(false);
+
+  useEffect(() => {
+    if (transactionSuccessful !== undefined) {
+      if (transactionSuccessful) {
+        setOpenSuccess(transactionSuccessful);
+      } else {
+        setOpenFailed(transactionSuccessful);
+      }
+    }
+  }, [transactionSuccessful]);
+
   const cart = useSelector(cartItemsList);
   const [openPayment, setOpenPayment] = useState(false);
 
   const togglePayment = () => {
     setOpenPayment((prev: boolean) => !prev);
   };
+
+  console.log(transactionSuccessful, "transactionSuccessful");
 
   const totals = cart.reduce(
     (total, item) => total + Number(item.product.price) * item.quantity,
@@ -126,7 +146,23 @@ const Checkout = () => {
         </section>
       )}
 
-      {openPayment && <Payments close={togglePayment} open={openPayment} />}
+      {openPayment && (
+        <Payments
+          close={togglePayment}
+          open={openPayment}
+          setTransactionSuccessful={setTransactionSuccessful}
+        />
+      )}
+
+      {transactionSuccessful ? (
+        <PaymentSuccessful
+          close={() => setOpenSuccess(false)}
+          open={openSuccess}
+        />
+      ) : (
+        <PaymentFailed close={() => setOpenFailed(false)} open={openFailed} />
+        // <></>
+      )}
     </section>
   );
 };

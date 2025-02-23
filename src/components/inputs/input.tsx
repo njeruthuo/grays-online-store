@@ -5,6 +5,7 @@ const Input: React.FC<InputType> = ({
   type,
   id,
   placeholder,
+  value,
 }) => {
   return (
     <input
@@ -14,6 +15,7 @@ const Input: React.FC<InputType> = ({
       className={`${className} ring ring-slate-700  p-2 rounded-md focus:outline-none focus:ring-blue-500 hover:ring-blue-400`}
       onChange={onChange}
       placeholder={placeholder}
+      value={value}
     />
   );
 };
@@ -21,6 +23,7 @@ export default Input;
 
 interface InputType {
   name: string;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className: string;
   type: string;

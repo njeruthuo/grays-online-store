@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import { Orders } from "@/__pages/orders";
 import NotFound404 from "@/__pages/NotFound404";
 import { Checkout } from "@/components/checkout";
 import { Catalogue, ProductDetail } from "@/__pages";
@@ -16,6 +17,7 @@ const Routing = () => {
         </Route>
 
         <Route element={<AuthenticatedView />}>
+          <Route path="/orders" element={<Orders />} />
           <Route path="/checkout" element={<Checkout />} />
         </Route>
 
