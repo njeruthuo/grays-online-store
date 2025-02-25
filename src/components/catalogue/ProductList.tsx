@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import { SearchBar } from "../search";
 import { ProductCard } from "../products";
+import { LoaderIcon } from "lucide-react";
 import {
   filteredProducts,
   productList,
@@ -10,10 +11,7 @@ import {
 import { useFetchProductsQuery } from "@/state/features/products/productApi";
 
 const ProductList = () => {
-  const { isError } = useFetchProductsQuery(null);
-  if (isError) {
-    console.log(isError);
-  }
+  const { isLoading } = useFetchProductsQuery(null);
 
   const products = useSelector(productList);
 
@@ -31,11 +29,20 @@ const ProductList = () => {
           <SearchBar />
         </div>
       </div>
-      <div className="sm:p-3 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-        {data?.map((product, index) => (
-          <ProductCard key={index} {...product} />
-        ))}
-      </div>
+
+      {isLoading ? (
+        <div className="flex flex-col space-y-4 justify-center items-center h-[60vh]">
+          <LoaderIcon size={70} className="animate-spin text-blue-500" />
+
+          <p>Loading products....</p>
+        </div>
+      ) : (
+        <div className="sm:p-3 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+          {data?.map((product, index) => (
+            <ProductCard key={index} {...product} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };
