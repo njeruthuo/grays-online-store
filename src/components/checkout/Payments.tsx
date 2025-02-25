@@ -62,7 +62,7 @@ const Payments: React.FC<IPaymentType> = ({
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log('Mpesa notification')
+      console.log("Mpesa notification");
       setTransactionComplete(true);
       setMpesaResponse(data);
     };

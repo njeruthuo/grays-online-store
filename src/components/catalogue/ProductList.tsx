@@ -19,21 +19,19 @@ const ProductList = () => {
 
   const filteredProductList = useSelector(filteredProducts);
 
-  // console.log(filteredProductList, "filtered Products list");
-
   const data = useMemo(() => {
     if (filteredProductList.length > 0) return filteredProductList;
     return products;
   }, [products, filteredProductList]);
 
   return (
-    <section className="flex flex-col space-y-6 rounded-lg">
+    <section className="flex flex-col sm:space-y-6 rounded-lg">
       <div className="card-color p-3 flex">
         <div className="flex justify-center w-full rounded-md">
           <SearchBar />
         </div>
       </div>
-      <div className="p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+      <div className="sm:p-3 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
         {data?.map((product, index) => (
           <ProductCard key={index} {...product} />
         ))}

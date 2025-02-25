@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 
 import { IProduct } from "@/types/products";
-import { BrandFilter, CategoryFilter, Slider } from "../filters";
 import { productList } from "@/state/features/products/productSlice";
+
+import { BrandFilter, CategoryFilter, Slider } from "../filters";
 
 const Categories = () => {
   const checkLargestPrice = (args: IProduct[]) => {

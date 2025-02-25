@@ -1,7 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { productApi, productReducer } from "../features/products";
-import { authApi, authReducer } from "../features/auth";
 import { orderApi } from "../features/orders";
+import { themeReducer } from "../features/ui";
+import { configureStore } from "@reduxjs/toolkit";
+import { authApi, authReducer } from "../features/auth";
+import { productApi, productReducer } from "../features/products";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,9 @@ export const store = configureStore({
     // Auth
     authReducer: authReducer,
     [authApi.reducerPath]: authApi.reducer,
+
+    // Theme
+    themeReducer: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([

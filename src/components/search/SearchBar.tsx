@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Button, Input } from "../inputs";
 import { useDispatch } from "react-redux";
+
+import { Button, Input } from "../inputs";
 import { filterSearchBar } from "@/state/features/products/productSlice";
 
 const SearchBar = () => {
@@ -15,18 +16,18 @@ const SearchBar = () => {
   };
 
   return (
-    <section className="ring-1 flex rounded-md w-2/3">
+    <section className="ring-1 flex rounded-md sm:w-2/3">
       <Input
         placeholder="Search for products or categories"
         id="search"
         name="search"
-        className=" border-none ring-0 w-2/3"
+        className=" border-none ring-0 sm:w-2/3 px-4"
         onChange={handleSearch}
         type="text"
       />
 
       <Button
-        className="text-white dark-purple p-2 w-1/3 rounded-r-md"
+        className="text-white dark-purple p-2 sm:w-1/3 rounded-r-md"
         onClick={handleSubmit}
         submitBtn={true}
       >
