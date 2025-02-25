@@ -1,18 +1,39 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import menuIcon from "@/assets/menu.svg";
 import closeIcon from "@/assets/close.svg";
 import profileIcon from "@/assets/account.svg";
 
 import { RootState } from "@/state/store/store";
+import { useState } from "react";
+import { isLoggedIn, logout } from "@/state/features/auth/authSlice";
+import { Profile } from "../auth";
 
 const Header: React.FC<HeaderPropTypes> = ({ openFilterBar }) => {
+  const [profile, setShowProfile] = useState(true);
+
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+
+  const loggedIn = useSelector(isLoggedIn);
   const cart = useSelector((state: RootState) => state.productReducer.cart);
 
   const showFilters = useSelector(
     (state: RootState) => state.themeReducer.showSidebar
   );
+
+  function handleLogOut() {
+    dispatch(logout());
+  }
+
+  function handleProfileIconClick() {
+    setShowProfile((prev: boolean) => !prev);
+    // if (loggedIn) {
+    // } else {
+    //   navigate("/sign-in");
+    // }
+  }
 
   return (
     <section className="w-full p-3 sm:px-22 px-8 bg-green-600 text-white font-bold text-xl">
@@ -45,9 +66,15 @@ const Header: React.FC<HeaderPropTypes> = ({ openFilterBar }) => {
               )}
             </div>
           </Link>
-
-          <div id="profile" className="">
+          <div
+            onClick={handleProfileIconClick}
+            id="profile"
+            className="relative"
+          >
             <img src={profileIcon} alt="" />
+            {profile && (
+              <Profile handleLogOut={handleLogOut} loggedIn={loggedIn} />
+            )}
           </div>
         </div>
       </div>
