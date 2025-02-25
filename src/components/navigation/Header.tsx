@@ -58,6 +58,6 @@ const Header: React.FC<HeaderPropTypes> = ({ openFilterBar }) => {
 export default Header;
 
 interface HeaderPropTypes {
-  openFilterBar: () => void;
+  openFilterBar?: () => void;
   openFilter?: boolean;
 }
