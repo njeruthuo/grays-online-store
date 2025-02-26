@@ -9,11 +9,11 @@ const AuthLayout = () => {
   const isAuthenticated = useSelector(isLoggedIn);
 
   return (
-    <div className="bg-[#DDC8C4] w-full h-screen flex justify-center items-center">
+    <div className="bg-slate-700 w-full h-screen flex justify-center items-center">
       {isAuthenticated ? (
         <Navigate to={next} />
       ) : (
-        <div className=" w-1/3 mx-auto rounded-md border p-8 shadow-lg">
+        <div className="sm:w-1/3 mx-auto rounded-md border p-8 shadow-lg">
           <Outlet />
         </div>
       )}

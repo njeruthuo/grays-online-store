@@ -39,8 +39,6 @@ const Checkout = () => {
     setOpenPayment((prev: boolean) => !prev);
   };
 
-  console.log(transactionSuccessful, "transactionSuccessful");
-
   const totals = cart.reduce(
     (total, item) => total + Number(item.product.price) * item.quantity,
     0
@@ -51,53 +49,46 @@ const Checkout = () => {
       <Link to={"/"}>
         <div className="flex m-3">
           <img className="text-black" src="/chevron_left_26dp.svg" alt="" />{" "}
-          <span>Back to shop</span>
+          <span>Go Back</span>
         </div>
       </Link>
 
       <section id="selected-products">
         {/* Show a list of items in cart or a default message */}
         {cart?.length > 0 ? (
-          <section className="w-[90%] mt-4 mx-auto ">
+          <section className="base-w mt-4 ">
             <h2 className="text-center text-2xl font-bold my-4">My cart</h2>
-            <div className="rounded-lg bg-white ">
+            <div className="p-2 space-y-3 overflow-y-auto h-[500px] border-gray-400 border rounded">
               {cart?.map((item, index) => (
                 <div
-                  className={`flex space-x-4 ${
+                  className={`flex flex-col sm:flex-row space-x-4 border rounded-md shadow bg-amber-100 p-2 ${
                     cart.length - 1 > index
-                      ? "border-b pb-2 border-gray-500"
+                      ? "border-b sm:pb-2 border-gray-500"
                       : ""
                   }`}
                   key={index}
                 >
-                  <div className="flex-1">
+                  <div className="sm:flex-1 w-full">
                     <img
                       alt={item.product.name}
-                      className="h-auto w-44"
+                      className="sm:h-auto sm:w-44 w-full h-36"
                       src={`${item.product.images[0]}`}
                     />
                   </div>
 
-                  <div id="details" className="flex flex-1 space-y-2 flex-col">
+                  <div
+                    id="details"
+                    className="flex flex-1 sm:space-y-2 flex-col"
+                  >
                     <p className="text-2xl font-bold">{item.product.name}</p>
-                    <p className="font-bold">{item.product.category.name}</p>
                     <p className="text-md">
                       Kshs. {formatNumber(item.product.price)}
-                    </p>{" "}
-                    <span>Qty: {item.quantity}</span>
-                    <p>
-                      <span>Total price: Kshs. </span>{" "}
-                      <span>
-                        {formatNumber(
-                          Number(item.product.price) * item.quantity
-                        )}
-                      </span>
                     </p>
                   </div>
 
                   <div
                     id="quantity-control"
-                    className="flex-1 flex justify-center space-x-4 items-center mx-4"
+                    className="flex-1 text-sm flex justify-center space-x-4 items-center sm:mx-4"
                   >
                     <AlreadyCarted
                       product={item.product}
@@ -106,7 +97,7 @@ const Checkout = () => {
 
                     <button
                       onClick={() => dispatch(removeFromCart(item.product.id))}
-                      className="flex px-2 py-2 text-white bg-red-500 rounded hover:cursor-pointer"
+                      className="flex place-items-center px-2 py-2 text-white bg-red-500 rounded hover:cursor-pointer"
                     >
                       <span>Remove</span> <TrashIcon />
                     </button>
@@ -131,15 +122,15 @@ const Checkout = () => {
           className="w-[90%] mx-auto flex place-items-center"
         >
           <p className="font-bold my-6">
-            <span>Cumulative totals: Kshs. </span>
-            <span className="text-blue-500 text-xl underline mx-4">
+            <span>Totals: Kshs. </span>
+            <span className="text-blue-500 text-xl underline sm:mx-4">
               {formatNumber(totals)}
             </span>
           </p>
 
           <button
             onClick={togglePayment}
-            className="ml-auto flex hover:cursor-pointer text-white font-bold px-4 py-3 rounded-md bg-green-500"
+            className="ml-auto flex hover:cursor-pointer text-white font-bold sm:px-4 p-2 sm:py-3 rounded-md bg-green-500"
           >
             <span>Check out</span> <ChevronRight />
           </button>

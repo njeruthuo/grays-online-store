@@ -15,6 +15,7 @@ import { useSignInMutation } from "@/state/features/auth/authApi";
 import { toasty } from "@/components/toaster";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
+import { LoaderCircleIcon } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -26,7 +27,7 @@ const formSchema = z.object({
 
 const SignInForm = () => {
   const navigate = useNavigate();
-  const [signIn] = useSignInMutation();
+  const [signIn, { isLoading }] = useSignInMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -92,9 +93,13 @@ const SignInForm = () => {
         />
         <MyButton
           type="submit"
-          className="bg-blue-500 w-full hover:bg-blue-400"
+          className={`${
+            isLoading ? "cursor-not-allowed bg-blue-300" : ""
+          } bg-blue-500 w-full hover:bg-blue-400`}
         >
-          Log in
+          <span>Log in</span>
+
+          {isLoading && <LoaderCircleIcon />}
         </MyButton>
       </form>
     </Form>

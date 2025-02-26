@@ -6,7 +6,7 @@ import {
   cartItemsList,
   productList,
 } from "@/state/features/products/productSlice";
-import { ImageCarousel, RelatedProducts } from "@/components/products";
+import { Images } from "@/components/products";
 
 const ProductDetail = () => {
   const cartItems = useSelector(cartItemsList);
@@ -33,13 +33,12 @@ const ProductDetail = () => {
       <div className="flex flex-col sm:flex-row space-x-10 justify-center mt-4">
         <div className="card-color rounded-xl flex border justify-end sm:w-1/3 w-full">
           {selectedProduct?.images && (
-            <ImageCarousel images={selectedProduct?.images} />
+            <Images images={selectedProduct?.images} />
           )}
         </div>
 
         <div>
-          <p className="text-2xl">{selectedProduct?.name}</p>
-          <p className="text-sm">{selectedProduct?.description}</p>
+          {/* <p className="text-2xl">{selectedProduct?.name}</p> */}
           <p className="text-lg my-2 font-bold text-blue-600">
             Kshs. {selectedProduct?.price}
           </p>
@@ -48,10 +47,19 @@ const ProductDetail = () => {
             <p>Brand: {selectedProduct?.brand.name} </p>
             <p>Category: {selectedProduct?.category.name} </p>
             {selectedProduct?.stocked ? (
-              <p>📉 In stock</p>
+              <div className="flex place-items-center space-x-2">
+                <input
+                  type="checkbox"
+                  name=""
+                  checked={selectedProduct?.stocked}
+                  id=""
+                />
+                <p>In stock</p>
+              </div>
             ) : (
               <p className="text-red-500">Out of stock 📉</p>
             )}
+            <p className="text-sm my-2">{selectedProduct?.description}</p>
           </div>
 
           <div className="mt-5">
@@ -69,7 +77,7 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      <div className="block my-5">
+      {/* <div className="block my-5">
         <h2 className="product-header">Reviews</h2>
         <p>No reviews available</p>
       </div>
@@ -79,7 +87,7 @@ const ProductDetail = () => {
         <div>
           <RelatedProducts />
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };
