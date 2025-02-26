@@ -28,10 +28,10 @@ const ProductDetail = () => {
   return (
     <section className="mx-auto w-[90%] py-2 pt-2 ">
       <h2 className="product-header text-center text-gray-800">
-        Product description
+        {selectedProduct?.name}
       </h2>
-      <div className="flex space-x-10 justify-center mt-4">
-        <div className="card-color  rounded-xl flex border justify-end w-1/3">
+      <div className="flex flex-col sm:flex-row space-x-10 justify-center mt-4">
+        <div className="card-color rounded-xl flex border justify-end sm:w-1/3 w-full">
           {selectedProduct?.images && (
             <ImageCarousel images={selectedProduct?.images} />
           )}

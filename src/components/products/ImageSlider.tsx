@@ -2,12 +2,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// const images = [
-//   "https://via.placeholder.com/800x400/ff7f7f/333333?text=Image+1",
-//   "https://via.placeholder.com/800x400/7fbfff/333333?text=Image+2",
-//   "https://via.placeholder.com/800x400/7fff7f/333333?text=Image+3",
-// ];
-
 export default function ImageCarousel({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -30,7 +24,7 @@ export default function ImageCarousel({ images }: { images: string[] }) {
       <AnimatePresence mode="wait">
         <motion.img
           key={images[currentIndex]}
-          src={`http://localhost:8000/${images[currentIndex]}`}
+          src={`${images[currentIndex]}`}
           alt={`Slide ${currentIndex + 1}`}
           className="w-full h-64 object-cover rounded-2xl shadow-lg"
           initial={{ opacity: 0, x: 50 }}
