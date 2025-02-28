@@ -23,7 +23,9 @@ const MainLayout = () => {
 
       <div className="rounded-full fixed right-1 z-40 bottom-20">
         <a
-          href="https://wa.me/+254741627205?text=Hello!%20I%20need%20help%20with%20your%20website."
+          href={`https://wa.me/+254741627205?text=${encodeURIComponent(
+            "Hello there, can I have..."
+          )}`}
           target="_blank"
           rel="noopener noreferrer"
           className="fixed right-4 bottom-20 z-40"

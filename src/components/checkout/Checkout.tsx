@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ChevronRight, TrashIcon } from "lucide-react";
+import { useSelector } from "react-redux";
+import { ChevronRight } from "lucide-react";
 
 import Payments from "./Payments";
 import { AlreadyCarted } from "../cart";
@@ -11,11 +11,11 @@ import PaymentFailed from "./PaymentFailed";
 import PaymentSuccessful from "./PaymentSuccessful";
 import {
   cartItemsList,
-  removeFromCart,
+  // removeFromCart,
 } from "@/state/features/products/productSlice";
 
 const Checkout = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [transactionSuccessful, setTransactionSuccessful] = useState<boolean>();
 
@@ -71,17 +71,19 @@ const Checkout = () => {
                   <div className="sm:flex-1 w-full">
                     <img
                       alt={item.product.name}
-                      className="sm:h-auto sm:w-44 w-full h-36"
+                      className="sm:h-auto sm:w-44 w-full"
                       src={`${item.product.images[0]}`}
                     />
                   </div>
 
                   <div
                     id="details"
-                    className="flex flex-1 sm:space-y-2 flex-col"
+                    className="flex flex-1 sm:space-y-2 flex-col text-center"
                   >
-                    <p className="text-2xl font-bold">{item.product.name}</p>
-                    <p className="text-md">
+                    <p className="text-2xl font-bold text-gray-700">
+                      {item.product.name}
+                    </p>
+                    <p className="text-md text-blue-500">
                       Kshs. {formatNumber(item.product.price)}
                     </p>
                   </div>
@@ -95,12 +97,12 @@ const Checkout = () => {
                       quantity={item.quantity}
                     />
 
-                    <button
+                    {/* <button
                       onClick={() => dispatch(removeFromCart(item.product.id))}
                       className="flex place-items-center px-2 py-2 text-white bg-red-500 rounded hover:cursor-pointer"
                     >
                       <span>Remove</span> <TrashIcon />
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               ))}

@@ -13,7 +13,7 @@ import {
 import { MyButton } from "@/components/inputs";
 import { useSignInMutation } from "@/state/features/auth/authApi";
 import { toasty } from "@/components/toaster";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { LoaderCircleIcon } from "lucide-react";
 
@@ -54,6 +54,12 @@ const SignInForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full">
+        <div className="text-white font-bold my-2">
+          <h2 className="text-2xl my-1">Login to your account</h2>
+          <p className="text-xl my-2 font-light">
+            Please sign in here.
+          </p>
+        </div>
         <FormField
           control={form.control}
           name="email"
@@ -99,9 +105,17 @@ const SignInForm = () => {
         >
           <span>Log in</span>
 
-          {isLoading && <LoaderCircleIcon />}
+          {isLoading && <LoaderCircleIcon className="animate-spin" />}
         </MyButton>
       </form>
+
+      <p className="my-2">
+        You can also{" "}
+        <Link className="text-green-500" to={"/sign-up"}>
+          create a new account here
+        </Link>
+        .
+      </p>
     </Form>
   );
 };

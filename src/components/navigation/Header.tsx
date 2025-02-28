@@ -11,10 +11,9 @@ import { isLoggedIn, logout } from "@/state/features/auth/authSlice";
 import { Profile } from "../auth";
 
 const Header: React.FC<HeaderPropTypes> = ({ openFilterBar }) => {
-  const [profile, setShowProfile] = useState(true);
+  const [profile, setShowProfile] = useState(false);
 
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   const loggedIn = useSelector(isLoggedIn);
   const cart = useSelector((state: RootState) => state.productReducer.cart);
@@ -29,10 +28,6 @@ const Header: React.FC<HeaderPropTypes> = ({ openFilterBar }) => {
 
   function handleProfileIconClick() {
     setShowProfile((prev: boolean) => !prev);
-    // if (loggedIn) {
-    // } else {
-    //   navigate("/sign-in");
-    // }
   }
 
   return (

@@ -88,6 +88,10 @@
   @apply text-[var(--dark-purple)];
 }
 
+.french-gray {
+  @apply text-[var(--french-gray)];
+}
+
 .dark {
   --background: hsl(0 0% 3.9%);
   --foreground: hsl(0 0% 98%);

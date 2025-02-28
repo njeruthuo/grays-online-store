@@ -11,7 +11,9 @@ const Profile: React.FC<IProfile> = ({ handleLogOut, loggedIn }) => {
           id="profile-card"
           className="absolute right-0 top-10 p-2 w-[200px] rounded bg-gray-300"
         >
-          <p className="text-gray-800 text-lg font-light">Check my orders</p>
+          <Link to={'/orders'}>
+            <p className="text-gray-800 text-lg font-light">Check my orders</p>
+          </Link>
           <hr className="my-2" />
           <MyButton
             className="bg-blue-500"

@@ -9,6 +9,8 @@ import { formatNumber } from "@/utils/numberFormatter";
 import { BASE_WEBSOCKET_URL } from "@/constants/constant";
 import { cartItemsList } from "@/state/features/products/productSlice";
 import { useCheckoutMutation } from "@/state/features/checkout/checkoutApi";
+import { toasty } from "../toaster";
+import { Spinner } from "../spinner";
 
 const Payments: React.FC<IPaymentType> = ({
   open,
@@ -18,6 +20,8 @@ const Payments: React.FC<IPaymentType> = ({
   const [checkout, { isLoading }] = useCheckoutMutation();
   const [mpesaResponse, setMpesaResponse] = useState({ data: [] });
   const [transactionComplete, setTransactionComplete] = useState<boolean>();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [phone, setPhone] = useState("");
 
   const transactionSuccessful: boolean = mpesaResponse?.data?.some(
     (item: { Name: string }) => item.Name === "MpesaReceiptNumber"
@@ -26,13 +30,12 @@ const Payments: React.FC<IPaymentType> = ({
   useEffect(() => {
     if (transactionSuccessful) {
       setTransactionSuccessful(transactionSuccessful);
-      // close();
     }
   }, [transactionSuccessful, setTransactionSuccessful, close]);
 
   const loading = useMemo(
-    () => isLoading || !transactionComplete,
-    [transactionComplete, isLoading]
+    () => isLoading || isProcessing,
+    [isProcessing, isLoading]
   );
 
   const cartItems = useSelector(cartItemsList);
@@ -42,14 +45,15 @@ const Payments: React.FC<IPaymentType> = ({
     0
   );
 
-  const [phone, setPhone] = useState("");
-
   const checkoutHandler = async () => {
     try {
+      setIsProcessing(true);
       const response = await checkout({ phone, totals, cartItems }).unwrap();
       console.log(response);
     } catch (error) {
       console.log(error);
+      setIsProcessing(false);
+      toasty("Request failed!", "error");
     }
   };
 
@@ -62,9 +66,10 @@ const Payments: React.FC<IPaymentType> = ({
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log("Mpesa notification");
+      console.log("Mpesa notification", data);
       setTransactionComplete(true);
       setMpesaResponse(data);
+      setIsProcessing(false);
     };
 
     socket.onclose = () => {
@@ -88,7 +93,7 @@ const Payments: React.FC<IPaymentType> = ({
       title="Payments"
       className="dark-purple-text"
     >
-      <section>
+      <section className="">
         <h1 className="font-bold text-lg">Pay for the following items</h1>
 
         <div className="my-3 font-bold">
@@ -119,7 +124,7 @@ const Payments: React.FC<IPaymentType> = ({
           </div>
         </div>
 
-        <div id="pay" className="flex justify-between mt-3">
+        <div id="pay" className="flex justify-between mt-3 space-x-2 text-sm">
           <input
             placeholder="Phone number"
             className="placeholder-blue-500 p-2 ring-1 rounded"
@@ -127,7 +132,15 @@ const Payments: React.FC<IPaymentType> = ({
             id="phone"
             name="phone"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => {
+              let input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+
+              if (!input.startsWith("254")) {
+                input = "254" + input.replace(/^254/, ""); // Ensure it starts with 254
+              }
+
+              setPhone(input);
+            }}
           />
 
           <Button
@@ -136,11 +149,11 @@ const Payments: React.FC<IPaymentType> = ({
             className={`ring ring-blue-500 text-white rounded bg-blue-500`}
           >
             <div
-              className={`flex justify-center items-center space-x-2 w-full px-2 ${
+              className={`flex justify-center items-center space-x-2 sm:w-full px-2 ${
                 loading ? "" : ""
               }`}
             >
-              {/* {loading && <Spinner />} */}
+              {loading && <Spinner />}
               <span>Request payment</span>
             </div>
           </Button>

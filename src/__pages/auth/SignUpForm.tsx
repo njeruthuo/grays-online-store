@@ -13,8 +13,9 @@ import {
 import { MyButton } from "@/components/inputs";
 import { useSignUpMutation } from "@/state/features/auth/authApi";
 import { toasty } from "@/components/toaster";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
+import { LoaderCircleIcon } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -26,7 +27,7 @@ const formSchema = z.object({
 
 const SignUpForm = () => {
   const navigate = useNavigate();
-  const [signUp] = useSignUpMutation();
+  const [signUp, { isLoading }] = useSignUpMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,16 +53,14 @@ const SignUpForm = () => {
 
   return (
     <Form {...form}>
-      <div className="text-white font-bold my-2">
-        <h2 className="text-2xl my-1">Create an account</h2>
-        <p className="text-xl my-2 font-light">
-          Please sign up to access our services.
-        </p>
-      </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 w-full text-white"
+        className="space-y-6 w-full"
       >
+        <div className="text-white font-bold ">
+          <h2 className="text-2xl my-1">Create an account</h2>
+          <p className="text-xl font-light">Please sign up here.</p>
+        </div>
         <FormField
           control={form.control}
           name="email"
@@ -103,9 +102,17 @@ const SignUpForm = () => {
           type="submit"
           className="bg-blue-500 w-full hover:bg-blue-400"
         >
-          Sign up
+          <span>Sign up</span>
+          {isLoading && <LoaderCircleIcon className="animate-spin" />}
         </MyButton>
       </form>
+      <p className="my-2">
+        You can also{" "}
+        <Link className="text-green-500" to={"/sign-in"}>
+          sign in here
+        </Link>
+        .
+      </p>
     </Form>
   );
 };
