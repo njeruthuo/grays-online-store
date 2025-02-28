@@ -53,7 +53,7 @@ const Payments: React.FC<IPaymentType> = ({
     } catch (error) {
       console.log(error);
       setIsProcessing(false);
-      toasty("Request failed!", "error");
+      toasty("Request failed!!", "error");
     }
   };
 
