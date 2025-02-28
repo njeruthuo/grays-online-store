@@ -19,7 +19,7 @@ const Payments: React.FC<IPaymentType> = ({
 }) => {
   const [checkout, { isLoading }] = useCheckoutMutation();
   const [mpesaResponse, setMpesaResponse] = useState({ data: [] });
-  const [transactionComplete, setTransactionComplete] = useState<boolean>();
+  // const [transactionComplete, setTransactionComplete] = useState<boolean>();
   const [isProcessing, setIsProcessing] = useState(false);
   const [phone, setPhone] = useState("");
 
@@ -67,7 +67,7 @@ const Payments: React.FC<IPaymentType> = ({
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       console.log("Mpesa notification", data);
-      setTransactionComplete(true);
+      // setTransactionComplete(true);
       setMpesaResponse(data);
       setIsProcessing(false);
     };
