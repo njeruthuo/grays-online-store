@@ -17,7 +17,7 @@ const AuthLayout = () => {
           <h3 className="text-center kumar-one-regular mb-8 font-bold text-2xl text-white">
             Grays online store
           </h3>
-          <div className="sm:w-1/3 sm:mx-auto rounded-md border p-8 shadow-lg">
+          <div className="sm:w-full sm:mx-auto rounded-md border p-8 shadow-lg">
             <Outlet />
           </div>
         </section>

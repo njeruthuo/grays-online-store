@@ -5,6 +5,7 @@ import { Checkout } from "@/components/checkout";
 import { AuthenticatedView, AuthLayout, MainLayout } from "@/__layouts";
 
 import { lazy, Suspense } from "react";
+import { AddProduct } from "@/components/catalogue";
 
 const NotFound404 = lazy(() => import("@/__pages/NotFound404"));
 const Catalogue = lazy(() => import("@/__pages/Catalogue"));
@@ -15,7 +16,13 @@ const SignUpForm = lazy(() => import("@/__pages/auth/SignUpForm"));
 const Routing = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div className="flex justify-center items-center h-screen w-full animate-pulse">Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="flex justify-center items-center h-screen w-full animate-pulse">
+            Loading...
+          </div>
+        }
+      >
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Catalogue />} />
@@ -25,6 +32,7 @@ const Routing = () => {
           <Route element={<AuthenticatedView />}>
             <Route path="/orders" element={<Orders />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/add" element={<AddProduct />} />
           </Route>
 
           <Route element={<AuthLayout />}>

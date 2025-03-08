@@ -92,6 +92,10 @@
   @apply text-[var(--french-gray)];
 }
 
+#profile p{
+  @apply text-blue-500
+}
+
 .dark {
   --background: hsl(0 0% 3.9%);
   --foreground: hsl(0 0% 98%);

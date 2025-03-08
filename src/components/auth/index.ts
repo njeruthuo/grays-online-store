@@ -1,3 +1,3 @@
-import Profile from "./Profile";
+import AuthIcon from "./AuthIcon";
 
-export { Profile };
+export { AuthIcon };

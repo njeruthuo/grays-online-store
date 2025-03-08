@@ -17,6 +17,11 @@ export interface ICategories {
   name: string;
 }
 
+export interface IBrands{
+  name:string;
+  id:number;
+}
+
 interface CartItem {
   quantity: number;
   product: IProduct;

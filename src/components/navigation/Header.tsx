@@ -1,38 +1,22 @@
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import menuIcon from "@/assets/menu.svg";
 import closeIcon from "@/assets/close.svg";
-import profileIcon from "@/assets/account.svg";
 
 import { RootState } from "@/state/store/store";
-import { useState } from "react";
-import { isLoggedIn, logout } from "@/state/features/auth/authSlice";
-import { Profile } from "../auth";
+import { AuthIcon } from "../auth";
 
 const Header: React.FC<HeaderPropTypes> = ({ openFilterBar }) => {
-  const [profile, setShowProfile] = useState(false);
-
-  const dispatch = useDispatch();
-
-  const loggedIn = useSelector(isLoggedIn);
   const cart = useSelector((state: RootState) => state.productReducer.cart);
 
   const showFilters = useSelector(
     (state: RootState) => state.themeReducer.showSidebar
   );
 
-  function handleLogOut() {
-    dispatch(logout());
-  }
-
-  function handleProfileIconClick() {
-    setShowProfile((prev: boolean) => !prev);
-  }
-
   return (
     <section className="w-full p-3 sm:px-22 px-8 bg-green-600 text-white font-bold text-xl">
-      <div className="flex justify-between place-items-center">
+      <div className="flex justify-between place-items-center ">
         <div onClick={openFilterBar} className="sm:hidden block" id="filters">
           {showFilters ? (
             <img src={closeIcon} alt="" />
@@ -61,16 +45,7 @@ const Header: React.FC<HeaderPropTypes> = ({ openFilterBar }) => {
               )}
             </div>
           </Link>
-          <div
-            onClick={handleProfileIconClick}
-            id="profile"
-            className="relative"
-          >
-            <img src={profileIcon} alt="" />
-            {profile && (
-              <Profile handleLogOut={handleLogOut} loggedIn={loggedIn} />
-            )}
-          </div>
+          <AuthIcon />
         </div>
       </div>
     </section>

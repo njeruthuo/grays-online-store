@@ -1,4 +1,6 @@
 import Categories from "./Categories";
 import ProductList from "./ProductList";
 
-export { Categories, ProductList };
+import { AddProduct } from "./forms";
+
+export { Categories, ProductList, AddProduct };

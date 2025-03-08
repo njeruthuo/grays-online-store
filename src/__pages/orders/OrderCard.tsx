@@ -27,6 +27,8 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
     [order]
   );
 
+  console.log(rows,'rows');
+
   return (
     <section className="border">
       <h3 className="text-center my-2 font-bold">Products Ordered</h3>

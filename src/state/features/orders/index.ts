@@ -32,9 +32,28 @@ export interface OrderItemType {
   quantity: number;
 }
 
+// export interface OrderInterface {
+//   id: number;
+//   date_created: Date | string;
+//   transaction: TransactionType;
+//   order_items: OrderItemType[];
+// }
+
 export interface OrderInterface {
+  date_created: Date;
+  delivered: boolean;
   id: number;
-  date_created: Date | string;
-  transaction: TransactionType;
+  lipa_mdogo: boolean;
   order_items: OrderItemType[];
+  outstanding_balance: string | number;
+  payment_completed: boolean;
+  payments: IPayment[];
+}
+
+interface IPayment {
+  amount_paid: string | number;
+  date_paid: Date;
+  id: number;
+  order: number;
+  transaction: TransactionType;
 }
