@@ -196,22 +196,18 @@ const Payments: React.FC<IPaymentType> = ({
 
           <div id="pay" className="flex justify-between mt-3 space-x-2 text-sm">
             <input
-              placeholder="Phone number"
+              placeholder="e.g 254768585724"
               className="placeholder-blue-500 p-2 ring-1 rounded"
               type="text"
               id="phone"
               name="phone"
               value={phone}
               onChange={(e) => {
-                let input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-
-                if (!input.startsWith("254")) {
-                  input = "254" + input.replace(/^254/, ""); // Ensure it starts with 254
-                }
-
-                setPhone(input);
+                setPhone(e.target.value);
               }}
             />
+
+            <span className="text-red-500">Hey</span>
 
             <Button
               submitBtn={true}
@@ -291,35 +287,33 @@ const Payments: React.FC<IPaymentType> = ({
             </div>
           </div>
 
-          <div id="pay" className="flex justify-between mt-3 space-x-2 text-sm">
-            <input
-              placeholder="Phone number"
-              className="placeholder-blue-500 p-2 ring-1 rounded"
-              type="text"
-              id="phone"
-              name="phone"
-              value={phone}
-              onChange={(e) => {
-                let input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-
-                if (!input.startsWith("254")) {
-                  input = "254" + input.replace(/^254/, ""); // Ensure it starts with 254
-                }
-
-                setPhone(input);
-              }}
-            />
+          <div
+            id="pay"
+            className="flex flex-col justify-between sm:flex-row sm:items-center mt-3 space-y-3 sm:space-y-0 sm:space-x-2 text-sm"
+          >
+            <div className="flex flex-col w-full sm:w-auto">
+              <input
+                placeholder="e.g 254768585724"
+                className="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
+                type="text"
+                id="phone"
+                name="phone"
+                value={phone}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                }}
+              />
+              <span className="text-red-500 text-xs mt-1">
+                * Ensure your phone number starts with 254 *
+              </span>
+            </div>
 
             <Button
               submitBtn={true}
               onClick={checkoutHandler}
-              className={`ring ring-blue-500 text-white rounded bg-blue-500`}
+              className="px-4 py-3 text-white bg-blue-500 hover:bg-blue-600 transition-all rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             >
-              <div
-                className={`flex justify-center items-center space-x-2 sm:w-full px-2 ${
-                  loading ? "" : ""
-                }`}
-              >
+              <div className="flex justify-center items-center space-x-2">
                 {loading && <Spinner />}
                 <span>Request payment</span>
               </div>
