@@ -10,6 +10,10 @@ import { AuthIcon } from "../auth";
 const Header: React.FC<HeaderPropTypes> = ({ openFilterBar }) => {
   const cart = useSelector((state: RootState) => state.productReducer.cart);
 
+  const is_super_user = useSelector((state:RootState)=>state.authReducer)
+
+  // console.log(is_super_user, "is_super_user");
+
   const showFilters = useSelector(
     (state: RootState) => state.themeReducer.showSidebar
   );
@@ -45,7 +49,10 @@ const Header: React.FC<HeaderPropTypes> = ({ openFilterBar }) => {
               )}
             </div>
           </Link>
-          <AuthIcon />
+          <AuthIcon
+            is_super_user={is_super_user.superuser}
+            authenticated={is_super_user.isLoggedIn}
+          />
         </div>
       </div>
     </section>

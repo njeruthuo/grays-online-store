@@ -5,11 +5,13 @@ import { RootState } from "@/state/store/store";
 interface initialStateTypes {
   isLoggedIn: boolean;
   token: string | null;
+  superuser: boolean;
 }
 
 const initialState: initialStateTypes = {
   isLoggedIn: !!localStorage.getItem("grayAuthToken"),
   token: null,
+  superuser: localStorage.getItem("grayStoreAdminStatus") === "true",
 };
 
 const authSlice = createSlice({
@@ -20,6 +22,7 @@ const authSlice = createSlice({
       localStorage.removeItem("grayAuthToken");
       state.isLoggedIn = false;
       state.token = null;
+      state.superuser = false;
     },
   },
 
@@ -27,10 +30,12 @@ const authSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.signIn.matchFulfilled,
       (state, action) => {
-        const { token } = action.payload;
+        const { token, superuser } = action.payload;
         localStorage.setItem("grayAuthToken", token);
+        localStorage.setItem("grayStoreAdminStatus", superuser);
         state.token = token;
         state.isLoggedIn = true;
+        state.superuser = true;
       }
     );
   },

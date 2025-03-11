@@ -108,11 +108,11 @@ const AddProduct = () => {
       const response = await addProduct(formData).unwrap();
       console.log(response, "response");
       toasty("Product add request was successful", "success");
+      form.reset();
     } catch (error) {
       console.log(error);
       toasty("There was a problem with this request", "error");
     }
-    console.log("Submitted Data:", values);
   }
 
   return (
@@ -276,10 +276,14 @@ const AddProduct = () => {
             ))}
           </div>
 
-          <Button className="w-full" type="submit">
+          <Button
+            className="w-full flex place-items-center bg-blue-500 hover:bg-blue-400 disabled:cursor-not-allowed"
+            disabled={isLoading}
+            type="submit"
+          >
             <span>Submit</span>
 
-            {isLoading && <Loader2Icon />}
+            {isLoading && <Loader2Icon className="animate-spin" />}
           </Button>
         </form>
       </Form>
