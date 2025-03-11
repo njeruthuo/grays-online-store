@@ -32,7 +32,7 @@ const Pagination = ({ onChange }: { onChange: (arg: number) => void }) => {
       >
         <ArrowBigLeft /> <span>Previous page</span>
       </MyButton>
-      <span className="px-4 py-2">
+      <span className="px-4 py-2 text-sm">
         Page {`${current} / ${Math.floor(count / 10)}`}
       </span>
       <MyButton
