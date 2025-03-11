@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { SearchBar } from "../search";
@@ -9,13 +9,20 @@ import {
   productList,
 } from "@/state/features/products/productSlice";
 import { useFetchProductsQuery } from "@/state/features/products/productApi";
+import { Pagination } from "../navigation";
 
 const ProductList = () => {
-  const { isLoading } = useFetchProductsQuery(null);
+  const [query, setQuery] = useState("?page=2");
+
+  const { isLoading, isFetching } = useFetchProductsQuery(query);
 
   const products = useSelector(productList);
 
   const filteredProductList = useSelector(filteredProducts);
+
+  function handlePaginationClick(page: number) {
+    setQuery(`?page=${page}`);
+  }
 
   const data = useMemo(() => {
     if (filteredProductList.length > 0) return filteredProductList;
@@ -30,7 +37,7 @@ const ProductList = () => {
         </div>
       </div>
 
-      {isLoading ? (
+      {isLoading || isFetching ? (
         <div className="flex flex-col space-y-4 justify-center items-center h-[60vh]">
           <LoaderIcon size={70} className="animate-spin text-blue-500" />
 
@@ -43,6 +50,11 @@ const ProductList = () => {
           ))}
         </div>
       )}
+      <Pagination
+        // count={productInfo.count}
+        // page={currentPage}
+        onChange={handlePaginationClick}
+      />
     </section>
   );
 };

@@ -5,6 +5,9 @@ import { ICategories, ProductState } from "@/types/products";
 import { RootState } from "@/state/store/store";
 
 const initialState: ProductState = {
+  next: "",
+  previous: "",
+  count: 0,
   products: [],
   cart: [],
   filteredProducts: [],
@@ -14,6 +17,9 @@ const productSlice = createSlice({
   name: "productSlice",
   initialState,
   reducers: {
+    // nextPage: (state) => {
+    //   state.next += 1;
+    // },
     addToCart: (state, action) => {
       // Check if added product is already in the cart.
       const item = state.cart.find(
@@ -87,8 +93,6 @@ const productSlice = createSlice({
     filterSearchBar: (state, action) => {
       const searchText = action.payload.toLowerCase();
 
-      console.log(searchText, "text for search");
-
       state.filteredProducts = state.products.filter(
         (product) =>
           product.name.toLowerCase().includes(searchText) ||
@@ -102,7 +106,11 @@ const productSlice = createSlice({
     builder.addMatcher(
       productApi.endpoints.fetchProducts.matchFulfilled,
       (state, action) => {
-        state.products = action.payload;
+        const { results, next, previous, count } = action.payload;
+        state.products = results;
+        state.count = count;
+        state.next = next;
+        state.previous = previous;
       }
     );
   },

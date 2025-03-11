@@ -17,9 +17,9 @@ export interface ICategories {
   name: string;
 }
 
-export interface IBrands{
-  name:string;
-  id:number;
+export interface IBrands {
+  name: string;
+  id: number;
 }
 
 interface CartItem {
@@ -31,9 +31,19 @@ export interface ProductState {
   products: IProduct[];
   cart: CartItem[];
   filteredProducts: IProduct[];
+  count: number;
+  next: null | string;
+  previous: null | string;
 }
 
 export interface ICategories {
   id: number;
   name: string;
+}
+
+export interface IResponseType {
+  results: IProduct[];
+  count: number;
+  next: null | string;
+  previous: null | string;
 }

@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/constants/constant";
-import { IBrands, ICategories, IProduct } from "@/types/products";
+import { IBrands, ICategories, IResponseType } from "@/types/products";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const productApi = createApi({
@@ -9,8 +9,8 @@ export const productApi = createApi({
   }),
   tagTypes: ["Products", "Categories"],
   endpoints: (builder) => ({
-    fetchProducts: builder.query<IProduct[], null>({
-      query: () => "catalogue/product_api_view/",
+    fetchProducts: builder.query<IResponseType, string>({
+      query: (arg) => `catalogue/product_api_view/${arg}`,
       providesTags: ["Products"],
     }),
 
