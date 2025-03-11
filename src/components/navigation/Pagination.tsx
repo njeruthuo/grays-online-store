@@ -23,7 +23,7 @@ const Pagination = ({ onChange }: { onChange: (arg: number) => void }) => {
   };
 
   return (
-    <div className=" flex justify-between p-2 rounded-lg">
+    <div className=" flex place-items-center justify-between p-2 rounded-lg">
       <MyButton
         className="bg-blue-500 hover:bg-blue-400 disabled:bg-gray-400 disabled:cursor-not-allowed"
         type="button"
@@ -32,7 +32,7 @@ const Pagination = ({ onChange }: { onChange: (arg: number) => void }) => {
       >
         <ArrowBigLeft /> <span>Previous page</span>
       </MyButton>
-      <span className="px-4 py-2 text-sm">
+      <span className="px-4 py-2 text-xs">
         Page {`${current} / ${Math.floor(count / 10)}`}
       </span>
       <MyButton
