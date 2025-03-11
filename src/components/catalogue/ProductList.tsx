@@ -12,7 +12,7 @@ import { useFetchProductsQuery } from "@/state/features/products/productApi";
 import { Pagination } from "../navigation";
 
 const ProductList = () => {
-  const [query, setQuery] = useState("?page=2");
+  const [query, setQuery] = useState("?page=1");
 
   const { isLoading, isFetching } = useFetchProductsQuery(query);
 
@@ -41,7 +41,7 @@ const ProductList = () => {
         <div className="flex flex-col space-y-4 justify-center items-center h-[60vh]">
           <LoaderIcon size={70} className="animate-spin text-blue-500" />
 
-          <p>Loading products....</p>
+          <p className="animate-pulse">Loading products....</p>
         </div>
       ) : (
         <div className="sm:p-3 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
