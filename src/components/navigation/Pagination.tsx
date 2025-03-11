@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
 import { MyButton } from "../inputs";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { RootState } from "@/state/store/store";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 const Pagination = ({ onChange }: { onChange: (arg: number) => void }) => {
   const { next, count } = useSelector(
@@ -29,7 +30,7 @@ const Pagination = ({ onChange }: { onChange: (arg: number) => void }) => {
         onClickHandler={handlePreviousPage}
         disabled={current === 1}
       >
-        Previous
+        <ArrowBigLeft /> <span>Previous page</span>
       </MyButton>
       <span className="px-4 py-2">
         Page {`${current} / ${Math.floor(count / 10)}`}
@@ -40,7 +41,7 @@ const Pagination = ({ onChange }: { onChange: (arg: number) => void }) => {
         onClickHandler={handleNextPage}
         disabled={!next}
       >
-        Next
+        <span>Next page</span> <ArrowBigRight />
       </MyButton>
     </div>
   );
