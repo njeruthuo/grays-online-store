@@ -11,15 +11,15 @@ const initialState: ProductState = {
   products: [],
   cart: [],
   filteredProducts: [],
+  filterNext: "",
+  filterPrevious: "",
+  filterCount: 0,
 };
 
 const productSlice = createSlice({
   name: "productSlice",
   initialState,
   reducers: {
-    // nextPage: (state) => {
-    //   state.next += 1;
-    // },
     addToCart: (state, action) => {
       // Check if added product is already in the cart.
       const item = state.cart.find(
@@ -111,6 +111,17 @@ const productSlice = createSlice({
         state.count = count;
         state.next = next;
         state.previous = previous;
+      }
+    );
+
+    builder.addMatcher(
+      productApi.endpoints.filterSearchBar.matchFulfilled,
+      (state, action) => {
+        const { results, next, previous, count } = action.payload;
+        state.filteredProducts = results;
+        state.filterCount = count;
+        state.filterNext = next;
+        state.filterPrevious = previous;
       }
     );
   },

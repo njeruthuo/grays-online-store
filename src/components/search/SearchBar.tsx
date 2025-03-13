@@ -1,18 +1,20 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { LoaderCircleIcon } from "lucide-react";
 
 import { Button, Input } from "../inputs";
-import { filterSearchBar } from "@/state/features/products/productSlice";
 
-const SearchBar = () => {
-  const dispatch = useDispatch();
-  const [searchText, setSearchText] = useState("");
+const SearchBar = ({
+  setSearchText,
+  isFetching,
+}: {
+  setSearchText: (arg: string) => void;
+  isFetching: boolean;
+}) => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(() => e.target.value);
+    setSearchText(e.target.value);
   };
 
   const handleSubmit = () => {
-    dispatch(filterSearchBar(searchText));
+    // setSearch(true);
   };
 
   return (
@@ -27,11 +29,12 @@ const SearchBar = () => {
       />
 
       <Button
-        className="text-white dark-purple p-2 sm:w-1/3 rounded-r-md"
+        className="text-white dark-purple p-2 sm:w-1/3 rounded-r-md flex place-items-center justify-center space-x-4"
         onClick={handleSubmit}
         submitBtn={true}
       >
-        Search
+        <span>Search</span>
+        {isFetching && <LoaderCircleIcon className="animate-spin" />}
       </Button>
     </section>
   );

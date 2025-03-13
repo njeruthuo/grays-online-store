@@ -34,6 +34,9 @@ export interface ProductState {
   count: number;
   next: null | string;
   previous: null | string;
+  filterNext: null | string;
+  filterPrevious: null | string;
+  filterCount: number;
 }
 
 export interface ICategories {

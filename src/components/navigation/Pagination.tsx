@@ -30,10 +30,10 @@ const Pagination = ({ onChange }: { onChange: (arg: number) => void }) => {
         onClickHandler={handlePreviousPage}
         disabled={current === 1}
       >
-        <ArrowBigLeft /> <span>Previous page</span>
+        <ArrowBigLeft /> <span>Previous</span>
       </MyButton>
       <span className="px-4 py-2 text-xs">
-        Page {`${current} / ${Math.floor(count / 10)}`}
+        Page {`${current} / ${Math.floor(count / 10) + 1}`}
       </span>
       <MyButton
         className="bg-green-500 hover:bg-green-400"
@@ -41,7 +41,7 @@ const Pagination = ({ onChange }: { onChange: (arg: number) => void }) => {
         onClickHandler={handleNextPage}
         disabled={!next}
       >
-        <span>Next page</span> <ArrowBigRight />
+        <span>Next</span> <ArrowBigRight />
       </MyButton>
     </div>
   );

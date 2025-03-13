@@ -8,20 +8,27 @@ import {
   filteredProducts,
   productList,
 } from "@/state/features/products/productSlice";
-import { useFetchProductsQuery } from "@/state/features/products/productApi";
+import {
+  useFetchProductsQuery,
+} from "@/state/features/products/productApi";
 import { Pagination } from "../navigation";
 
 const ProductList = () => {
-  const [query, setQuery] = useState("?page=1");
+  const [searchText, setSearchText] = useState("");
 
-  const { isLoading, isFetching } = useFetchProductsQuery(query);
+  const [filterQuery, setFilterQuery] = useState(
+    `?page=1&search=${searchText}`
+  );
+
+  const { isLoading, isFetching } = useFetchProductsQuery(filterQuery);
+
 
   const products = useSelector(productList);
 
   const filteredProductList = useSelector(filteredProducts);
 
   function handlePaginationClick(page: number) {
-    setQuery(`?page=${page}`);
+    setFilterQuery(`?page=${page}&search=${searchText}`);
   }
 
   const data = useMemo(() => {
@@ -30,10 +37,10 @@ const ProductList = () => {
   }, [products, filteredProductList]);
 
   return (
-    <section className="flex flex-col sm:space-y-6 rounded-lg">
-      <div className="card-color p-3 flex">
-        <div className="flex justify-center w-full rounded-md">
-          <SearchBar />
+    <section className="flex flex-col sm:space-y-6 rounded-lg relative">
+      <div className="card-color p-3 flex sticky top-15">
+        <div className="flex justify-center w-full rounded-md ">
+          <SearchBar isFetching={isFetching} setSearchText={setSearchText} />
         </div>
       </div>
 
@@ -50,11 +57,7 @@ const ProductList = () => {
           ))}
         </div>
       )}
-      <Pagination
-        // count={productInfo.count}
-        // page={currentPage}
-        onChange={handlePaginationClick}
-      />
+      <Pagination onChange={handlePaginationClick} />
     </section>
   );
 };

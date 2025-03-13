@@ -7,7 +7,7 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
   }),
-  tagTypes: ["Products", "Categories"],
+  tagTypes: ["Products", "Categories", "Brand"],
   endpoints: (builder) => ({
     fetchProducts: builder.query<IResponseType, string>({
       query: (arg) => `catalogue/product_api_view/${arg}`,
@@ -21,7 +21,12 @@ export const productApi = createApi({
 
     fetchBrandList: builder.query<IBrands[], null>({
       query: () => "catalogue/brand_api_view/",
-      providesTags: ["Categories"],
+      providesTags: ["Brand"],
+    }),
+
+    filterSearchBar: builder.query<IResponseType, string>({
+      query: (arg) => `catalogue/product_api_view/${arg}`,
+      providesTags: ["Products"],
     }),
 
     addProduct: builder.mutation({
@@ -39,4 +44,5 @@ export const {
   useFetchCategoryListQuery,
   useFetchBrandListQuery,
   useAddProductMutation,
+  useFilterSearchBarQuery,
 } = productApi;
