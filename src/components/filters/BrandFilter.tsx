@@ -1,28 +1,23 @@
-import { ICategories, IProduct } from "@/types/products";
+import { ICategories } from "@/types/products";
 import { useEffect, useState } from "react";
 import { Checkbox } from "../inputs";
 import { useDispatch } from "react-redux";
 import { filterBrand } from "@/state/features/products/productSlice";
+import { useFetchBrandListQuery } from "@/state/features/products/productApi";
 
-const BrandFilter = ({ products }: { products: IProduct[] }) => {
+const BrandFilter = () => {
   const dispatch = useDispatch();
-  const [brandList, setBrandList] = useState<ICategories[]>([]);
+  // const [brandList, setBrandList] = useState<ICategories[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<ICategories[]>([]);
 
-  useEffect(() => {
-    setBrandList(() => {
-      const listItems: ICategories[] = [];
-      products.forEach((product) => listItems.push(product.brand));
-      return listItems;
-    });
-  }, [products]);
+  const { data: Brands } = useFetchBrandListQuery(null);
 
   function onSelectBrand(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, checked } = e.target; // Use checked instead of value
 
     setSelectedBrand((prev) => {
       if (checked) {
-        const brand = brandList?.find((cat) => cat.name === name);
+        const brand = Brands?.find((cat) => cat.name === name);
         if (!brand) return prev;
 
         return [...prev, brand];
@@ -42,7 +37,7 @@ const BrandFilter = ({ products }: { products: IProduct[] }) => {
 
   return (
     <div>
-      {brandList?.map((brand, index) => (
+      {Brands?.map((brand, index) => (
         <section key={index} className="flex space-x-3">
           <Checkbox
             className=""
@@ -56,23 +51,6 @@ const BrandFilter = ({ products }: { products: IProduct[] }) => {
           </p>
         </section>
       ))}
-      {/* {brandList?.map((brand) => ( */}
-      {/* // <p>{brand.name}</p>
-        {brand?.map((item, index) => (
-                  <section key={index} className="flex space-x-3">
-                    <Checkbox
-                      id={item.name}
-                      name={item.name}
-                      checked={checkActiveBoxes(item)}
-                      className=""
-                      onChange={onSelectCategory}
-                    />
-                    <p className="dark-purple-text" key={item.id}>
-                      {item.name}
-                    </p>
-                  </section>
-                ))}
-      // ))} */}
     </div>
   );
 };

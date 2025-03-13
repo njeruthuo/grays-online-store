@@ -16,49 +16,33 @@ const Categories = () => {
   const allProducts = useSelector(productList);
 
   return (
-    <>
-      <div className="card-color">
-        <div>
-          <div className="category-header">SHOP BY</div>
-          <div className="category-container">
+    <div className="card-color h-[800px] relative overflow-y-auto p-4">
+      <div>
+        <div className="category-header sticky top-0">SHOP BY</div>
+        <div className="category-container">
+          <div>
+            <h2 className="font-bold">Category</h2>
             <div>
-              <h2 className="font-bold">Category</h2>
-              <div>
-                <CategoryFilter />
-              </div>
+              <CategoryFilter />
             </div>
+          </div>
 
+          <div>
+            <h2>Price</h2>
             <div>
-              <h2>Price</h2>
-              <div>
-                <Slider maxPrice={checkLargestPrice(allProducts)} />
-              </div>
+              <Slider maxPrice={checkLargestPrice(allProducts)} />
             </div>
+          </div>
 
+          <div>
+            <h2>Brand</h2>
             <div>
-              <h2>Brand</h2>
-              <div>
-                <BrandFilter products={allProducts} />
-              </div>
+              <BrandFilter />
             </div>
-
-            {/* <div>
-              <h2>Color</h2>
-              <div></div>
-            </div> */}
           </div>
         </div>
       </div>
-
-      {/* <div className="card-color mt-6">
-        <div>
-          <div className="category-header">BEST SELLERS</div>
-          <div className="category-container">
-            <p>A list of most sold products.</p>
-          </div>
-        </div>
-      </div> */}
-    </>
+    </div>
   );
 };
 export default Categories;
