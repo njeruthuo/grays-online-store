@@ -1,9 +1,10 @@
 import { Header, PaymentInfo } from "@/components/navigation";
 import { isLoggedIn } from "@/state/features/auth/authSlice";
 import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const AuthenticatedView = () => {
+  const location = useLocation()
   const isAuthenticated = useSelector(isLoggedIn);
   return (
     <div className="relative">
@@ -13,7 +14,7 @@ const AuthenticatedView = () => {
       ) : (
         <Outlet />
       )}
-      <PaymentInfo/>
+      {!location.pathname.includes("add") && <PaymentInfo />}
     </div>
   );
 };
