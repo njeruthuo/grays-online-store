@@ -13,10 +13,21 @@ const CurrencyConverter = ({ priceInUSD }: { priceInUSD: number }) => {
 
   useEffect(() => {
     const detectCurrency = async () => {
-      const userLang = navigator.language;
-      const userCountry = userLang.split("-")[1]?.toUpperCase() || "KE"; // Default to Kenya if unknown
-      const targetCurrency = currencyMapping[userCountry] || DEFAULT_CURRENCY;
+      let userCountry = "KE"; // Default to Kenya if unknown
 
+      try {
+        // Fetch user's country based on IP address
+        const ipResponse = await fetch("https://ipapi.co/country/");
+        const countryCode = await ipResponse.text();
+        userCountry = countryCode.toUpperCase();
+      } catch (error) {
+        console.error("Error fetching country from IP:", error);
+        // Fallback to navigator.language if IP detection fails
+        const userLang = navigator.language;
+        userCountry = userLang.split("-")[1]?.toUpperCase() || "KE";
+      }
+
+      const targetCurrency = currencyMapping[userCountry] || DEFAULT_CURRENCY;
       setLocalCurrency(targetCurrency);
 
       // Check for cached exchange rates
