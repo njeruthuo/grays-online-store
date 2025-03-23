@@ -38,12 +38,12 @@ const MainLayout = () => {
             <p>3322892</p>
             <button
               onClick={copyToClipboard}
-              className="bg-white sm:px-3 px-2 py-1 rounded-lg shadow-md border border-gray-300 text-sm hover:bg-gray-100 transition"
+              className="bg-white flex sm:px-3 px-2 py-1 rounded-lg shadow-md border border-gray-300 text-sm hover:bg-gray-100 transition"
             >
               {copied ? (
                 <>Copied!</>
               ) : (
-                <div className="text-xs">
+                <div className="text-xs flex place-items-center">
                   <img src="/content_paste_24dp.svg" alt="" />
                   copy
                 </div>
