@@ -11,7 +11,7 @@ const CopyTillNumber = () => {
       });
     };
   return (
-    <div className="flex  space-x-4 my-2 place-items-center">
+    <div className="flex z-50 sm:space-x-4 space-x-2 sm:my-2 place-items-center">
       <p>{MPESATILLNUMBER}</p>
       <button
         onClick={copyToClipboard}

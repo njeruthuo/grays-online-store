@@ -8,9 +8,7 @@ import {
   filteredProducts,
   productList,
 } from "@/state/features/products/productSlice";
-import {
-  useFetchProductsQuery,
-} from "@/state/features/products/productApi";
+import { useFetchProductsQuery } from "@/state/features/products/productApi";
 import { Pagination } from "../navigation";
 
 const ProductList = () => {
@@ -21,7 +19,6 @@ const ProductList = () => {
   );
 
   const { isLoading, isFetching } = useFetchProductsQuery(filterQuery);
-
 
   const products = useSelector(productList);
 
@@ -37,7 +34,7 @@ const ProductList = () => {
   }, [products, filteredProductList]);
 
   return (
-    <section className="flex flex-col sm:space-y-6 rounded-lg relative">
+    <section className="flex flex-col sm:space-y-6 rounded-lg relative min-h-[90vh]">
       <div className="card-color p-3 flex sticky top-15">
         <div className="flex justify-center w-full rounded-md ">
           <SearchBar isFetching={isFetching} setSearchText={setSearchText} />
@@ -57,7 +54,9 @@ const ProductList = () => {
           ))}
         </div>
       )}
-      <Pagination onChange={handlePaginationClick} />
+      <div className=" absolute bottom-0 left-0 right-0">
+        <Pagination onChange={handlePaginationClick} />
+      </div>
     </section>
   );
 };

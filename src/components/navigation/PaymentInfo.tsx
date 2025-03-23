@@ -6,7 +6,7 @@ const PaymentInfo = () => {
   
 
   return (
-    <div className="fixed right-4 bottom-20 z-40 flex flex-col items-end gap-2">
+    <div className="fixed right-4 bottom-16 z-40 flex flex-col items-end gap-2">
       <div className="bg-white px-2 py-1 rounded-lg shadow-md">
         <h2 className="font-bold mb-2">MPESA Till Number</h2>
         <CopyTillNumber/>

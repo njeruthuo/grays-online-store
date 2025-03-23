@@ -257,7 +257,7 @@ const Payments: React.FC<IPaymentType> = ({
             <div className="flex justify-end font-bold">
               <h2>
                 Totals:
-                <CurrencyConverter priceInUSD={Number(total_sum)} />
+                <CurrencyConverter priceInUSD={total_sum} />
               </h2>
             </div>
           </div>
