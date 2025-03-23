@@ -48,7 +48,7 @@ const ProductList = () => {
           <p className="animate-pulse">Loading products....</p>
         </div>
       ) : (
-        <div className="sm:p-3 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+        <div className="sm:p-3 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mb-8">
           {data?.map((product, index) => (
             <ProductCard key={index} {...product} />
           ))}
