@@ -1,5 +1,6 @@
 import { currencyMapping } from "@/constants/constant";
 import { useEffect, useState } from "react";
+import { formatNumber } from "./numberFormatter";
 
 const DEFAULT_CURRENCY = "KES"; // Default to Kenyan Shillings
 const BASE_CURRENCY = "USD"; // Assume product prices are in USD
@@ -38,7 +39,7 @@ const CurrencyConverter = ({ priceInUSD }: { priceInUSD: number }) => {
 
   return (
     <span className="font-bol">
-      {localCurrency} {convertedPrice}
+      {localCurrency} {formatNumber(convertedPrice)}
     </span>
   );
 };
