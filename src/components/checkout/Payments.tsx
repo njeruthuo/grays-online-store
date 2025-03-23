@@ -10,6 +10,8 @@ import { cartItemsList } from "@/state/features/products/productSlice";
 import { useCheckoutMutation } from "@/state/features/checkout/checkoutApi";
 import { toasty } from "../toaster";
 import { Spinner } from "../spinner";
+import CopyTillNumber from "@/utils/CopyTillNumber";
+import CurrencyConverter from "@/utils/currencyConverter";
 
 const Payments: React.FC<IPaymentType> = ({
   open,
@@ -38,8 +40,6 @@ const Payments: React.FC<IPaymentType> = ({
     () => isLoading || isProcessing,
     [isProcessing, isLoading]
   );
-
-  console.log(items, "items");
 
   const cartItems = useSelector(cartItemsList);
 
@@ -158,7 +158,7 @@ const Payments: React.FC<IPaymentType> = ({
           <div id="totals" className="my-3 mb-6">
             <div className="flex justify-end font-bold">
               <h2>
-                Renaining unpaid amount:{" "}
+                Remaining balance:{" "}
                 <span>{formatNumber(items.outstanding_balance)}</span>
               </h2>
             </div>
@@ -243,7 +243,11 @@ const Payments: React.FC<IPaymentType> = ({
                 <h2>{item.product.name}</h2>
                 <h2>{item.quantity}</h2>
                 <h2>
-                  {formatNumber(item.quantity * Number(item.product.price))}
+                  <CurrencyConverter
+                    priceInUSD={Number(
+                      formatNumber(item.quantity * Number(item.product.price))
+                    )}
+                  />
                 </h2>
               </div>
             </section>
@@ -252,12 +256,18 @@ const Payments: React.FC<IPaymentType> = ({
           <div id="totals" className="my-3 mb-6">
             <div className="flex justify-end font-bold">
               <h2>
-                Totals: <span>{formatNumber(total_sum)}</span>
+                Totals:
+                <CurrencyConverter priceInUSD={Number(total_sum)} />
               </h2>
             </div>
           </div>
 
-          <div className="flex place-items-center space-x-2 ">
+          <div>
+            <h3>Make a payment through Mpesa Till number </h3>
+            <CopyTillNumber />
+          </div>
+
+          {/* <div className="flex place-items-center space-x-2 ">
             {lipaMdogo && (
               <div id="amount" className="border">
                 <input
@@ -318,7 +328,7 @@ const Payments: React.FC<IPaymentType> = ({
                 <span>Request payment</span>
               </div>
             </Button>
-          </div>
+          </div> */}
         </section>
       )}
     </GlobalModal>

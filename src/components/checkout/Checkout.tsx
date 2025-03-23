@@ -1,22 +1,17 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import Payments from "./Payments";
 import { AlreadyCarted } from "../cart";
-import { formatNumber } from "@/utils/numberFormatter";
 
 import PaymentFailed from "./PaymentFailed";
 import PaymentSuccessful from "./PaymentSuccessful";
-import {
-  cartItemsList,
-  // removeFromCart,
-} from "@/state/features/products/productSlice";
+import CurrencyConverter from "@/utils/currencyConverter";
+import { cartItemsList } from "@/state/features/products/productSlice";
 
 const Checkout = () => {
-  // const dispatch = useDispatch();
-
   const [transactionSuccessful, setTransactionSuccessful] = useState<boolean>();
 
   const [openSuccess, setOpenSuccess] = useState(false);
@@ -54,7 +49,6 @@ const Checkout = () => {
       </Link>
 
       <section id="selected-products">
-        {/* Show a list of items in cart or a default message */}
         {cart?.length > 0 ? (
           <section className="base-w mt-4 ">
             <h2 className="text-center text-2xl font-bold my-4">My cart</h2>
@@ -84,7 +78,9 @@ const Checkout = () => {
                       {item.product.name}
                     </p>
                     <p className="text-md text-blue-500">
-                      Kshs. {formatNumber(item.product.price)}
+                      <CurrencyConverter
+                        priceInUSD={Number(item.product?.price)}
+                      />
                     </p>
                   </div>
 
@@ -126,7 +122,7 @@ const Checkout = () => {
           <p className="font-bold my-6">
             <span>Totals: Kshs. </span>
             <span className="text-blue-500 text-xl underline sm:mx-4">
-              {formatNumber(totals)}
+              <CurrencyConverter priceInUSD={Number(totals)} />
             </span>
           </p>
 

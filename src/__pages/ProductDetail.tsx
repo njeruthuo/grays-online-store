@@ -7,6 +7,7 @@ import {
   productList,
 } from "@/state/features/products/productSlice";
 import { Images } from "@/components/products";
+import CurrencyConverter from "@/utils/currencyConverter";
 
 const ProductDetail = () => {
   const cartItems = useSelector(cartItemsList);
@@ -38,9 +39,8 @@ const ProductDetail = () => {
         </div>
 
         <div>
-          {/* <p className="text-2xl">{selectedProduct?.name}</p> */}
           <p className="text-lg my-2 font-bold text-blue-600">
-            Kshs. {selectedProduct?.price}
+            <CurrencyConverter priceInUSD={Number(selectedProduct?.price)} />
           </p>
 
           <div className="space-y-3">
