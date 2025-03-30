@@ -10,7 +10,7 @@ export const productApi = createApi({
   tagTypes: ["Products", "Categories", "Brand"],
   endpoints: (builder) => ({
     fetchProducts: builder.query<IResponseType, string>({
-      query: (arg) => `catalogue/product_api_view/${arg}`,
+      query: () => `catalogue/product_api_view/`,
       providesTags: ["Products"],
     }),
 

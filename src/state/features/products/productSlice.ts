@@ -91,13 +91,13 @@ const productSlice = createSlice({
     },
 
     filterSearchBar: (state, action) => {
-      const searchText = action.payload.toLowerCase();
+      const searchText = action.payload?.toLowerCase();
 
       state.filteredProducts = state.products.filter(
         (product) =>
-          product.name.toLowerCase().includes(searchText) ||
-          product.category.name.toLowerCase().includes(searchText) ||
-          product.brand.name.toLowerCase().includes(searchText)
+          product.name?.toLowerCase().includes(searchText) ||
+          product.category?.name.toLowerCase().includes(searchText) ||
+          product.brand.name?.toLowerCase().includes(searchText)
       );
     },
   },
@@ -108,6 +108,7 @@ const productSlice = createSlice({
       (state, action) => {
         const { results, next, previous, count } = action.payload;
         state.products = results;
+        state.filteredProducts = results;
         state.count = count;
         state.next = next;
         state.previous = previous;
