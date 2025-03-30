@@ -1,19 +1,27 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { SearchBar } from "../search";
 import { ProductCard } from "../products";
 import { LoaderIcon } from "lucide-react";
 import { Pagination } from "../navigation";
-import { filteredProducts } from "@/state/features/products/productSlice";
+import {
+  filteredProducts,
+  revertSearch,
+} from "@/state/features/products/productSlice";
 import { useFetchProductsQuery } from "@/state/features/products/productApi";
 
 const ProductList = () => {
   const [searchText, setSearchText] = useState("");
+  const dispatch = useDispatch();
 
   const [filterQuery, setFilterQuery] = useState(
     `?page=1&search=${searchText}`
   );
+
+  useEffect(() => {
+    if (searchText == "") dispatch(revertSearch());
+  }, [dispatch, searchText]);
 
   const { isLoading, isFetching } = useFetchProductsQuery(filterQuery);
 

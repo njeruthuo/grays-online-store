@@ -100,6 +100,10 @@ const productSlice = createSlice({
           product.brand.name?.toLowerCase().includes(searchText)
       );
     },
+
+    revertSearch: (state) => {
+      state.filteredProducts = state.products;
+    },
   },
 
   extraReducers: (builder) => {
@@ -131,6 +135,7 @@ const productSlice = createSlice({
 export default productSlice.reducer;
 
 export const {
+  revertSearch,
   addToCart,
   removeFromCart,
   reduceCartQuantity,
