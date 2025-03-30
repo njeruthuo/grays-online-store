@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SearchBar } from "../search";
 import { ProductCard } from "../products";
 import { LoaderIcon } from "lucide-react";
-import { Pagination } from "../navigation";
+// import { Pagination } from "../navigation";
 import {
   filteredProducts,
   revertSearch,
@@ -15,21 +15,21 @@ const ProductList = () => {
   const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
 
-  const [filterQuery, setFilterQuery] = useState(
-    `?page=1&search=${searchText}`
-  );
+  // const [filterQuery, setFilterQuery] = useState(
+  //   `?page=1&search=${searchText}`
+  // );
 
   useEffect(() => {
     if (searchText == "") dispatch(revertSearch());
   }, [dispatch, searchText]);
 
-  const { isLoading, isFetching } = useFetchProductsQuery(filterQuery);
+  const { isLoading, isFetching } = useFetchProductsQuery("");
 
   const filteredProductList = useSelector(filteredProducts);
 
-  function handlePaginationClick(page: number) {
-    setFilterQuery(`?page=${page}&search=${searchText}`);
-  }
+  // function handlePaginationClick(page: number) {
+  //   setFilterQuery(`?page=${page}&search=${searchText}`);
+  // }
 
   return (
     <section className="flex flex-col sm:space-y-6 rounded-lg relative min-h-[90vh]">
@@ -53,7 +53,7 @@ const ProductList = () => {
         </div>
       )}
       <div className=" absolute bottom-0 left-0 right-0">
-        <Pagination onChange={handlePaginationClick} />
+        {/* <Pagination onChange={handlePaginationClick} /> */}
       </div>
     </section>
   );
