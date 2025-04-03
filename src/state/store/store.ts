@@ -4,11 +4,16 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authApi, authReducer } from "../features/auth";
 import { productApi, productReducer } from "../features/products";
 
+import productFetch from "@/components/catalogue/reducers/productFetch";
+
 export const store = configureStore({
   reducer: {
     // Products
     productReducer: productReducer,
     [productApi.reducerPath]: productApi.reducer,
+
+    // Fetch products new
+    productFetch: productFetch,
 
     // Orders
     [orderApi.reducerPath]: orderApi.reducer,

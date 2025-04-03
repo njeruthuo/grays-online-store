@@ -1,35 +1,42 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { SearchBar } from "../search";
 import { ProductCard } from "../products";
-import { LoaderIcon } from "lucide-react";
-// import { Pagination } from "../navigation";
-import {
-  filteredProducts,
-  revertSearch,
-} from "@/state/features/products/productSlice";
-import { useFetchProductsQuery } from "@/state/features/products/productApi";
+import { fetchProducts, resetProducts } from "./reducers/productFetch";
+import { RootState } from "@/state/store/store";
+import { AppDispatch } from "@/state/store/store";
+import { IProduct } from "@/types/products";
 
 const ProductList = () => {
   const [searchText, setSearchText] = useState("");
-  const dispatch = useDispatch();
 
-  // const [filterQuery, setFilterQuery] = useState(
-  //   `?page=1&search=${searchText}`
-  // );
+  const dispatch = useDispatch<AppDispatch>();
+  const { items, page, hasMore, status } = useSelector(
+    (state: RootState) => state.productFetch
+  );
 
+  // Fetch products when searchText changes
   useEffect(() => {
-    if (searchText == "") dispatch(revertSearch());
+    dispatch(resetProducts()); // Reset product list
+    dispatch(fetchProducts({ page: 1, searchText })); // Fetch with search
   }, [dispatch, searchText]);
 
-  const { isLoading, isFetching } = useFetchProductsQuery("");
+  const handleScroll = useCallback(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 100 &&
+      hasMore &&
+      status !== "loading"
+    ) {
+      dispatch(fetchProducts({ page, searchText }));
+    }
+  }, [dispatch, hasMore, page, searchText, status]);
 
-  const filteredProductList = useSelector(filteredProducts);
-
-  // function handlePaginationClick(page: number) {
-  //   setFilterQuery(`?page=${page}&search=${searchText}`);
-  // }
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [page, hasMore, status, handleScroll]);
 
   return (
     <section className="flex flex-col sm:space-y-6 rounded-lg relative min-h-[90vh]">
@@ -39,21 +46,13 @@ const ProductList = () => {
         </div>
       </div>
 
-      {isLoading || isFetching ? (
-        <div className="flex flex-col space-y-4 justify-center items-center h-[60vh]">
-          <LoaderIcon size={70} className="animate-spin text-blue-500" />
-
-          <p className="animate-pulse">Loading products....</p>
-        </div>
-      ) : (
-        <div className="sm:p-3 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mb-14">
-          {filteredProductList?.map((product, index) => (
-            <ProductCard key={index} {...product} />
-          ))}
-        </div>
-      )}
+      <div className="sm:p-3 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mb-14">
+        {items?.map((product: IProduct, index) => (
+          <ProductCard key={index} {...product} />
+        ))}
+      </div>
       <div className=" absolute bottom-0 left-0 right-0">
-        {/* <Pagination onChange={handlePaginationClick} /> */}
+        {hasMore && <h2 className="animate-bounce text-center">Loading...</h2>}
       </div>
     </section>
   );
