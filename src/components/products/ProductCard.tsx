@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import { AlreadyCarted } from "../cart";
 import AddToCart from "../cart/AddToCart";
 import { IProduct } from "@/types/products";
-import CurrencyConverter from "@/utils/currencyConverter";
+// import CurrencyConverter from "@/utils/currencyConverter";
+import { formatNumber } from "@/utils/numberFormatter";
 import { cartItemsList } from "@/state/features/products/productSlice";
 
 const ProductCard: React.FC<IProduct> = (product) => {
@@ -27,7 +28,8 @@ const ProductCard: React.FC<IProduct> = (product) => {
           <p className="font-bold  mt-2 text-xl text-gray-800">{name}</p>
           <p className="text-sm">{description}</p>
           <p className="text-lg my-1 font-bold text-blue-600">
-            <CurrencyConverter priceInUSD={Number(price)} />
+            KES {formatNumber(price)}
+            {/* <CurrencyConverter priceInUSD={Number(price)} /> */}
           </p>
           <div className="flex items-center mb-2 justify-center">
             <input

@@ -11,7 +11,7 @@ import { useCheckoutMutation } from "@/state/features/checkout/checkoutApi";
 import { toasty } from "../toaster";
 import { Spinner } from "../spinner";
 import CopyTillNumber from "@/utils/CopyTillNumber";
-import CurrencyConverter from "@/utils/currencyConverter";
+// import CurrencyConverter from "@/utils/currencyConverter";
 
 const Payments: React.FC<IPaymentType> = ({
   open,
@@ -243,11 +243,12 @@ const Payments: React.FC<IPaymentType> = ({
                 <h2>{item.product.name}</h2>
                 <h2>{item.quantity}</h2>
                 <h2>
-                  <CurrencyConverter
+                  {/* <CurrencyConverter
                     priceInUSD={Number(
                       formatNumber(item.quantity * Number(item.product.price))
                     )}
-                  />
+                  /> */}
+                  KES {formatNumber(item.quantity * Number(item.product.price))}
                 </h2>
               </div>
             </section>
@@ -257,7 +258,8 @@ const Payments: React.FC<IPaymentType> = ({
             <div className="flex justify-end font-bold">
               <h2>
                 Totals:
-                <CurrencyConverter priceInUSD={total_sum} />
+                {/* <CurrencyConverter priceInUSD={total_sum} /> */}
+                KES {formatNumber(total_sum)}
               </h2>
             </div>
           </div>

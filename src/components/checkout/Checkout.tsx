@@ -8,8 +8,9 @@ import { AlreadyCarted } from "../cart";
 
 import PaymentFailed from "./PaymentFailed";
 import PaymentSuccessful from "./PaymentSuccessful";
-import CurrencyConverter from "@/utils/currencyConverter";
+// import CurrencyConverter from "@/utils/currencyConverter";
 import { cartItemsList } from "@/state/features/products/productSlice";
+import { formatNumber } from "@/utils/numberFormatter";
 
 const Checkout = () => {
   const [transactionSuccessful, setTransactionSuccessful] = useState<boolean>();
@@ -78,9 +79,10 @@ const Checkout = () => {
                       {item.product.name}
                     </p>
                     <p className="text-md text-blue-500">
-                      <CurrencyConverter
+                      KES {formatNumber(Number(item.product?.price))}
+                      {/* <CurrencyConverter
                         priceInUSD={Number(item.product?.price)}
-                      />
+                      /> */}
                     </p>
                   </div>
 
@@ -122,7 +124,8 @@ const Checkout = () => {
           <p className="font-bold my-6">
             <span>Totals: Kshs. </span>
             <span className="text-blue-500 text-xl underline sm:mx-4">
-              <CurrencyConverter priceInUSD={Number(totals)} />
+              {/* <CurrencyConverter priceInUSD={Number(totals)} /> */}
+              KES {formatNumber(Number(totals))}
             </span>
           </p>
 

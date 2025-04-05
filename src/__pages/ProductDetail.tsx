@@ -7,7 +7,8 @@ import {
   productList,
 } from "@/state/features/products/productSlice";
 import { Images } from "@/components/products";
-import CurrencyConverter from "@/utils/currencyConverter";
+// import CurrencyConverter from "@/utils/currencyConverter";
+import { formatNumber } from "@/utils/numberFormatter";
 
 const ProductDetail = () => {
   const cartItems = useSelector(cartItemsList);
@@ -40,7 +41,8 @@ const ProductDetail = () => {
 
         <div>
           <p className="text-lg my-2 font-bold text-blue-600">
-            <CurrencyConverter priceInUSD={Number(selectedProduct?.price)} />
+            KES {formatNumber(Number(selectedProduct?.price))}
+            {/* <CurrencyConverter priceInUSD={Number(selectedProduct?.price)} /> */}
           </p>
 
           <div className="space-y-3">
