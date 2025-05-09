@@ -9,10 +9,13 @@ import {
 import { Images } from "@/components/products";
 // import CurrencyConverter from "@/utils/currencyConverter";
 import { formatNumber } from "@/utils/numberFormatter";
+import { useGetProductDetailsQuery } from "@/state/features/products/productApi";
 
 const ProductDetail = () => {
   const cartItems = useSelector(cartItemsList);
   const { id } = useParams();
+
+  // console.log(id);
 
   const productId = id ? parseInt(id, 10) : null;
 
@@ -27,16 +30,16 @@ const ProductDetail = () => {
     (product) => product?.id === productId
   );
 
+  const { data: Product } = useGetProductDetailsQuery(Number(id));
+
   return (
     <section className="mx-auto w-[90%] py-2 pt-2 ">
       <h2 className="product-header text-center text-gray-800">
-        {selectedProduct?.name}
+        {Product?.name}
       </h2>
       <div className="flex flex-col sm:flex-row space-x-10 justify-center mt-4">
         <div className="card-color rounded-xl flex border justify-end sm:w-1/3 w-full">
-          {selectedProduct?.images && (
-            <Images images={selectedProduct?.images} />
-          )}
+          {Product?.images && <Images images={Product?.images} />}
         </div>
 
         <div>
@@ -46,14 +49,14 @@ const ProductDetail = () => {
           </p>
 
           <div className="space-y-3">
-            <p>Brand: {selectedProduct?.brand.name} </p>
-            <p>Category: {selectedProduct?.category.name} </p>
-            {selectedProduct?.stocked ? (
+            <p>Brand: {Product?.brand.name} </p>
+            <p>Category: {Product?.category.name} </p>
+            {Product?.stocked ? (
               <div className="flex place-items-center space-x-2">
                 <input
                   type="checkbox"
                   name=""
-                  checked={selectedProduct?.stocked}
+                  checked={Product?.stocked}
                   id=""
                 />
                 <p>In stock</p>
@@ -61,18 +64,15 @@ const ProductDetail = () => {
             ) : (
               <p className="text-red-500">Out of stock 📉</p>
             )}
-            <p className="text-sm my-2">{selectedProduct?.description}</p>
+            <p className="text-sm my-2">{Product?.description}</p>
           </div>
 
           <div className="mt-5">
-            {selectedProduct ? (
+            {Product ? (
               isProductInCart ? (
-                <AlreadyCarted
-                  product={selectedProduct}
-                  quantity={itemCount ?? 1}
-                />
+                <AlreadyCarted product={Product} quantity={itemCount ?? 1} />
               ) : (
-                <AddToCart product={selectedProduct} />
+                <AddToCart product={Product} />
               )
             ) : null}
           </div>

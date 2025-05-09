@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/constants/constant";
-import { IBrands, ICategories, IResponseType } from "@/types/products";
+import { IBrands, ICategories, IProduct, IResponseType } from "@/types/products";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const productApi = createApi({
@@ -36,6 +36,10 @@ export const productApi = createApi({
         body: arg,
       }),
     }),
+
+    getProductDetails: builder.query<IProduct, number>({
+      query: (id) => `catalogue/product_api_view/?id=${id}`,
+    }),
   }),
 });
 
@@ -45,4 +49,5 @@ export const {
   useFetchBrandListQuery,
   useAddProductMutation,
   useFilterSearchBarQuery,
+  useGetProductDetailsQuery,
 } = productApi;
