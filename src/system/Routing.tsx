@@ -26,7 +26,7 @@ const Routing = () => {
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Catalogue />} />
-            <Route path="/details/:id" element={<ProductDetail />} />
+            <Route path="/details/:slug" element={<ProductDetail />} />
           </Route>
 
           <Route element={<AuthenticatedView />}>

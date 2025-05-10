@@ -37,8 +37,8 @@ export const productApi = createApi({
       }),
     }),
 
-    getProductDetails: builder.query<IProduct, number>({
-      query: (id) => `catalogue/product_api_view/?id=${id}`,
+    getProductDetails: builder.query<IProduct, string>({
+      query: (slug) => `catalogue/product_api_view/?slug=${slug}`,
     }),
   }),
 });

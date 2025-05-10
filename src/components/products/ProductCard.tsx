@@ -11,7 +11,7 @@ import { cartItemsList } from "@/state/features/products/productSlice";
 
 const ProductCard: React.FC<IProduct> = (product) => {
   const cartItems = useSelector(cartItemsList);
-  const { id, description, images, name, price, stocked } = product;
+  const { id, description, images, name, price, stocked,slug } = product;
 
   const isProductInCart = cartItems.some((item) => item.product.id === id);
 
@@ -20,7 +20,7 @@ const ProductCard: React.FC<IProduct> = (product) => {
 
   return (
     <section className="shadow-2xl rounded p-2 text-center product-card-bg">
-      <Link to={`/details/${id}`}>
+      <Link to={`/details/${slug}`}>
         <div>
           <div>
             <img src={`${images[0]}`} alt="" className="w-full sm:h-44" />

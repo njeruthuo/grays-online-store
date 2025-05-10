@@ -15,24 +15,24 @@ import { Loader2Icon } from "lucide-react";
 
 const ProductDetail = () => {
   const cartItems = useSelector(cartItemsList);
-  const { id } = useParams();
+  const { slug } = useParams();
 
   // console.log(id);
 
-  const productId = id ? parseInt(id, 10) : null;
+  // const productId = id ? parseInt(id, 10) : null;
 
-  const isProductInCart = cartItems.some(
-    (item) => item.product.id == productId
-  );
+  const isProductInCart = cartItems.some((item) => item.product.slug == slug);
 
   const itemCount =
-    cartItems.find((item) => item.product.id === productId)?.quantity || 0;
+    cartItems.find((item) => item.product.slug === slug)?.quantity || 0;
 
   // const selectedProduct = useSelector(productList).find(
   //   (product) => product?.id === productId
   // );
 
-  const { data: Product, isLoading } = useGetProductDetailsQuery(Number(id));
+  const { data: Product, isLoading } = useGetProductDetailsQuery(
+    slug ? slug.toString() : ""
+  );
 
   return (
     <section className="mx-auto w-[90%] py-2 pt-2 ">
